@@ -1,0 +1,25 @@
+<mapping name="Left Button click to AISinglePresence enter" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.Pointer.Mouse" name="mouse" states="left_pressed" result="mouse" process="onchange" />
+      <observation id="3" interactor="Interactor.AIO.AIOUT.AIContainer.AISinglePresence" name="sheets" states="waiting" result="ais" process="instant" />
+    </observations>
+    <actions>
+      <event id="4" type="enter" target="ais"/>
+    </actions>
+  </operator>
+
+</mapping>
+
+<!--
+
+ # first Button click
+
+   o4 = Observation.new(:element =>"Interactor.Pointer.Mouse",:name => "mouse", :states =>[:left_pressed], :result => "p")
+   o5 = Observation.new(:element =>"Interactor.AIO.AIOUT.AIContainer.AISinglePresence",:name => "sheets", :continuous => true, :states =>[:waiting], :result => "c")
+   a3 = EventAction.new(:event => :enter,:target => "c")
+   m3 = ComplementaryMapping.new(:name=>"first  Click",:observations => [o4,o5],:actions =>[a3])
+-->

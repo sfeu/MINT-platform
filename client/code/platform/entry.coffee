@@ -4,9 +4,11 @@
 window.ss = require('socketstream')
 
 ss.server.on 'disconnect', ->
+  $('#main').css opacity: 0.3
   console.log('Connection down :-(')
 
 ss.server.on 'reconnect', ->
+  $('#main').css opacity: 1
   console.log('Connection back up :-)')
 
 ss.server.on 'ready', ->
@@ -15,4 +17,4 @@ ss.server.on 'ready', ->
   jQuery ->
     
     # Load app
-    require('/monitor')
+    require('/platform')

@@ -13,7 +13,7 @@ createReferences = (data) ->
     row++
 
 retrieveInteractors = () ->
-  ss.rpc 'app.retrieveInteractors', (response) ->
+  ss.rpc 'monitor.retrieveInteractors', (response) ->
       aDataSet = jQuery.parseJSON response
       createReferences(aDataSet)
       table = $('#example').dataTable( {
@@ -37,8 +37,8 @@ updateInteractor = (data) ->
   #console.log ("update row #{row} with newstates #{data['new_states'].join("|")} requested")
 
 # This method is called automatically when the websocket connection is established. Do not rename/delete
-ss.rpc('app.init',null)
-#SS.server.app.init()
+ss.rpc('monitor.init',null)
+#SS.server.monitor.init()
 ss.event.on 'interactor', (msg,channel) ->
   updateInteractor(JSON.parse msg)
 
@@ -55,7 +55,7 @@ ss.event.on 'updateMapping', (msg,channel) ->
 
 retrieveInteractors()
 
-ss.rpc 'app.retrieveMappings',null, (response) ->
+ss.rpc 'monitor.retrieveMappings',null, (response) ->
   mapping_table = $('#mappings').dataTable( {
     "iDisplayLength": 50,
     "aoColumns": [

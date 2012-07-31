@@ -1,0 +1,15 @@
+!!! 5
+html(lang="en")
+  head(id="mint-header")
+    != SocketStream
+    meta(charset="utf-8")
+    meta(content='True',name='HandheldFriendly')
+    meta(content='width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;', name='viewport')
+    meta(name="viewport",content="width=device-width")
+    title MINT 2012 - Platform
+  body
+    #pointerCanvas
+        #main
+            form(onsubmit: 'return false')#signIn.views.hidden
+                h3 Please enter a username to begin:
+                input(id='prompt',type='text')
