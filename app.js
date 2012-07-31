@@ -4,20 +4,20 @@ var http = require('http'),
     ss = require('socketstream');
 
 // in app.js
-ss.session.store.use('redis');
+///ss.session.store.use('redis');
 ss.publish.transport.use('redis');  // any config can be passed to the second argument
 
 // Define a single-page client called 'main'
-ss.client.define('main', {
-  view: 'app.jade',
+ss.client.define('monitor', {
+  view: 'monitor.jade',
   css:  ['libs/reset.css', 'libs/demo_table.css','libs/demo_page.css','libs/jquery-ui.css','app.styl'],
-  code: ['libs/jquery.min.js', 'libs/jquery.tmpl.min.js','libs/helpers.js','libs/jquery.dataTables.js','libs/jquery-ui-1.8.22.custom.min.js','app'],
+  code: ['libs/jquery.min.js', 'libs/jquery.tmpl.min.js','libs/helpers.js','libs/jquery.dataTables.js','libs/jquery-ui-1.8.22.custom.min.js','monitor'],
   tmpl: '*'
 });
 
 // Serve this client on the root URL
-ss.http.route('/', function(req, res){
-  res.serveClient('main');
+ss.http.route('/monitor', function(req, res){
+  res.serveClient('monitor');
 });
 
 // Code Formatters
