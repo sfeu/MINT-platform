@@ -1,7 +1,7 @@
 # Client-side Code
 pointer = require("/ir/pointer.coffee")
 touch = require("/ir/touch.coffee")
-interactor = require("/interactor.coffee")
+interactorJS = require("/interactor.coffee")
 Array::remove = ( e ) -> @splice i, 1 if (i = @indexOf e) isnt -1
 
 current_user = null
@@ -93,7 +93,7 @@ initJSInteractor = (interactor) ->
   types = interactor.cio.classtype.split("::")
   i_type = types[types.length - 1]
   #call a javacsript function that can be used to initialize the new interactor
-  jsfunction = "interactor." + i_type.toLowerCase() + "JS"
+  jsfunction = "interactorJS." + i_type.toLowerCase() + "JS"
   if (eval("typeof " + jsfunction + " == 'function'"))
     f = eval(jsfunction)  # bad style TODO but windows does not work like expected
     f(interactor)
