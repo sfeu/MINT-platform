@@ -43,6 +43,10 @@ getIdentifier = (interactor) ->
   i_type = types[types.length - 1]
   "#"+i_type.toLowerCase() + "-" + interactor.cio.name
 
+getInputIdentifier = (interactor) ->
+  "#input-" + interactor.cio.name
+
+
 hideInteractor = (interactor) ->
   identifier = getIdentifier(interactor)
   if $(identifier).length == 0
@@ -58,6 +62,13 @@ highlightInteractor = (highlight,interactor) ->
   else
     $(identifier).removeClass("ui-state-hover")
     $(identifier).addClass("displayed")
+
+selectInteractor = (select,interactor) ->
+  identifier = getInputIdentifier(interactor)
+  if select
+    $(identifier).attr('checked',true)
+  else
+    $(identifier).attr('checked',false)
 
 displayInteractor = (interactor) ->
   console.log interactor
@@ -139,6 +150,8 @@ ss.event.on 'command', (msg,channel) ->
     when 'init_js' then initJSInteractor(data)
     when 'highlight' then highlightInteractor(true,data)
     when 'unhighlight' then highlightInteractor(false,data)
+    when 'select' then selectInteractor(true,data)
+    when 'unselect' then selectInteractor(false,data)
 
 ss.rpc 'platform.init', (user) ->
   console.log(user)

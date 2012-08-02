@@ -36,6 +36,10 @@ subscribeInteractors = (ss, userId,session_id = null) ->
           forwardCommand(ss,counter,"unhighlight",data["name"],userId)
         if "hidden"  in data["new_states"]
           forwardCommand(ss,counter,"hide",data["name"],userId)
+        if "selected" in data["new_states"]
+          forwardCommand(ss,counter,"select",data["name"],userId)
+        if "unselected" in data["new_states"]
+          forwardCommand(ss,counter,"unselect",data["name"],userId)
         if "init_js"  in data["new_states"]
           forwardCommand(ss,counter,"init_js",data["name"],userId)
         if channel == "Interactor.CIO.Button"
