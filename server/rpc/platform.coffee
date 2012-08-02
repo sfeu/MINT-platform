@@ -94,8 +94,8 @@ exports.actions = (req, res, ss) ->
     R.publish "data:Interactor.Pointer.Mouse.mouse:user:#{req.session.userId}",r
 
   updateInteractorSize: (coords) ->
-    console.log("update interactor #{coords.name}: #{coords.x}")
-    R.publish "in_channel:Interactor.CIO.coordinates."+coords.name+":"+req.session.userId,JSON.stringify {"x:": coords.x, "y": coords.y, "width":coords.width, "height": coords.height}
+    console.log("update interactor #{coords}")
+    R.publish "in_channel:Interactor.CIO.coordinates."+coords.name+":"+req.session.userId,JSON.stringify coords
 
   updateMouse: (cmd) ->
     r = JSON.stringify {"cmd": "button", "data" : cmd}

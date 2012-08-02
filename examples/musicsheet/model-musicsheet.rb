@@ -57,14 +57,15 @@ EM.run {
   CarouFredSelImage.create(:name=>"page8",:path=>"/musicsheet/sheets/page8.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
 
   RadioButtonGroup.create(:name =>"option", :x=>30,:y=>840, :width=>1200, :height => 100,:rows=>1,:cols=>3,:states=>[:positioned])
-  RadioButton.create(:name => "nodding",:x=>40, :y=>850, :width=>200, :height => 80,:states=>[:positioned])
-  RadioButton.create(:name => "tilting",:x=>440, :y=>850,:width=>200, :height => 80,:states=>[:positioned])
-  RadioButton.create(:name => "turning",:x=>840, :y=>850,:width=>200, :height => 80,:states=>[:positioned])
+  RadioButton.create(:name => "nodding",:x=>40, :y=>850, :width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
+  RadioButton.create(:name => "tilting",:x=>440, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
+  RadioButton.create(:name => "turning",:x=>840, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
 
   sheets = AISinglePresence.first(:name=>"sheets")
   sheets.process_event :present
 
-
+  options = AISingleChoice.first(:name=>"option")
+  options.process_event :present
 
 
 }

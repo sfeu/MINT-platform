@@ -61,3 +61,21 @@ html, #c-carousel {
 
     opacity: 1;
 }
+
+#option {
+    width: 1280px;
+    height: 80px;
+    margin: 370px 0px 0px -530px;
+    position: absolute;
+    left: 50%;
+    top: 50%
+}
+
+#option div {
+    width: 25%;
+    height: 40px;
+    margin: 20px 20px 20px;
+    padding-top: 20px;
+    text-align: center;
+    float: left;
+}

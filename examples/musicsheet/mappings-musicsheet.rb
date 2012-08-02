@@ -56,6 +56,7 @@ EM.run {
     #  m7.start
 
 
+  PositionUpdater.new().start
 
 
 }

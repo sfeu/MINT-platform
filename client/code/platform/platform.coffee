@@ -12,14 +12,14 @@ class InteractorSize
     width: null
     height: null
     name: null
-    constructor: (name,interactor) ->
-        @x = Math.abs interactor.position().left
-        @y = Math.abs interactor.position().top
-        @width = Math.abs interactor.width()
-        @height = Math.abs interactor.height()
+    constructor: (name,interactor,w,h) ->
+        @x = Math.round interactor.offset().left
+        @y = Math.round interactor.offset().top
+        @width = Math.round w
+        @height = Math.round h
         @name = name
-    toJSON  = ->
-        [@name,@x,@y,@width,@height].toJSON
+        console.log("width!!! #{@width}")
+
 
 displaySignInForm = ->
   $('#signIn').show().submit ->
@@ -54,8 +54,10 @@ highlightInteractor = (highlight,interactor) ->
   identifier = getIdentifier(interactor)
   if highlight
     $(identifier).addClass("ui-state-hover")
+    $(identifier).removeClass("displayed")
   else
     $(identifier).removeClass("ui-state-hover")
+    $(identifier).addClass("displayed")
 
 displayInteractor = (interactor) ->
   console.log interactor
@@ -71,15 +73,20 @@ displayInteractor = (interactor) ->
     types = interactor.cio.classtype.split("::")
     i_type = types[types.length - 1]
     fim = $('#tmpl-platform-'+i_type).tmpl(interactor)
-    width = 0
+
+    elem = null
     if ("hidden" in interactor.cio.states.split('|')) or "hidden" in interactor.cio.abstract_states.split('|')
       fim.hide()
     if (interactor.aio.parent and $('#'+interactor.aio.parent).length > 0)
-      witdh = fim.appendTo('#'+interactor.aio.parent).width()
+      fim.appendTo('#'+interactor.aio.parent)
     else
-      width = fim.appendTo('#main').width()
-    console.log("width #{width}")
-    ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,fim))
+      fim.appendTo('#main')
+    fim.addClass("displayed")
+
+    elem = $(identifier)
+    if elem.length >0
+      console.log("sizes #{elem.offset().left}/#{elem.offset().top} - #{elem.outerWidth()}/#{elem.outerHeight()}")
+      ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,elem,elem.outerWidth(),elem.outerHeight()))
 
     window.displayedInteractors.push interactor
 
@@ -97,6 +104,11 @@ initJSInteractor = (interactor) ->
   if (eval("typeof " + jsfunction + " == 'function'"))
     f = eval(jsfunction)  # bad style TODO but windows does not work like expected
     f(interactor)
+
+  elem = $('#'+interactor.aio.name)
+  if elem.length >0
+    console.log("init_js sizes #{elem.offset().left}/#{elem.offset().top} - #{elem.css('width')}/#{elem.css('height')}")
+    ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,elem,elem.width(),elem.height()))
 
 setUser = (userid) ->
   $('#user').text("User:"+userid)
@@ -120,7 +132,7 @@ window.unresolvedDepsInteractors = []
 
 ss.event.on 'command', (msg,channel) ->
   data = JSON.parse msg
-  console.log "command: #{data['command']}"
+  console.log "command: #{data['command']} for #{data.aio.name}"
   switch data["command"]
     when "interactor" then displayInteractor(data)
     when 'hide' then hideInteractor(data)
