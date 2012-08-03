@@ -10,7 +10,7 @@ ss.publish.transport.use('redis');  // any config can be passed to the second ar
 // Define a single-page client called 'platform'
 ss.client.define('platform', {
   view: 'platform.jade',
-  css:  ['common/libs','platform/platform.styl'],
+  css:  ['common/libs','platform/libs','platform/platform.styl'],
   code: ['common/libs','platform'],
   tmpl: ['platform']
 });

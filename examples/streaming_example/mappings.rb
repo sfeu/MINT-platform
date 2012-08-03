@@ -32,6 +32,7 @@ EM.run {
   # Start server to connect mapping tool
   MappingServer.new.start(m)
 
-  SCXMLClient.new("Interactor.AIO*",nil).start
+  # start position updater to know about widgets positions in browser
+  PositionUpdater.new.start
 }
 

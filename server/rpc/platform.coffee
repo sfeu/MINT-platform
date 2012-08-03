@@ -49,10 +49,10 @@ subscribeInteractors = (ss, userId,session_id = null) ->
             if "released" in data["new_states"]
               forwardCommand(ss,counter,"button",data["name"],userId)
   # Test that should be later on changed to forward all changes to client if the object is in presenting!
-  pubsub.subscribe("Interactor.AIO.AIOUT.AIOUTContinuous.volume")
+  pubsub.subscribe("out_channel:Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser")
   pubsub.on "message", (channel, msg) =>
     console.log("received msg #{channel}")
-    if channel== "Interactor.AIO.AIOUT.AIOUTContinuous.volume"
+    if channel== "out_channel:Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser"
       session=":session:#{session_id}" if session_id
       ss.publish.channel "user:#{userId}","Interactor.AIO.AIOUT.AIOUTContinuous.volume",JSON.parse(msg)
 
@@ -105,7 +105,7 @@ exports.actions = (req, res, ss) ->
     r = JSON.stringify {"cmd": "button", "data" : cmd}
     R.publish "data:Interactor.Pointer.Mouse.mouse:user:#{req.session.userId}",r
 
-  updateSlider: (name,value) ->
+  updateSlider: ([name,value]) ->
     R.publish "in_channel:Interactor.AIO.AIIN.AIINContinuous."+name+":"+req.session.userId,value
 
   stopSlider: (name) ->

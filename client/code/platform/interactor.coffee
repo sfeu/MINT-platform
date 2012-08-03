@@ -1,24 +1,22 @@
 exports.sliderJS = (interactor) ->
   $("#slider-"+interactor.cio.name).slider
     slide: (event, ui) ->
-      SS.server.app.updateSlider(interactor.cio.name,ui.value)
-    # start:(event,ui) ->
-    #  SS.server.app.startSlider(name,ui.value)
-     stop:(event,ui) ->
-          SS.server.app.stopSlider(interactor.cio.name)
+      ss.rpc "platform.updateSlider",([interactor.cio.name, ui.value])
+    stop:(event,ui) ->
+      ss.rpc "platform.stopSlider",(interactor.cio.name)
 
 exports.progressbarJS = (interactor) ->
   $("#progressbar-"+interactor.cio.name).progressbar({ value: interactor.aio.data });
-  SS.events.on 'Interactor.AIO.AIOUT.AIOUTContinuous.volume', (msg,channel) ->
-      $("#progressbar-#{msg.name}").progressbar( "option", "value", msg.data );
+  ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.volume', (msg,channel) ->
+      $("#progressbar-volume").progressbar( "option", "value", msg);
 
 
 exports.buttonJS = (interactor) ->
   $("#button-"+interactor.cio.name).button().unbind('mouseenter mouseleave');
-  SS.events.on 'button', (msg,channel) ->
+  ss.event.on 'button', (msg,channel) ->
     msg = JSON.parse msg
     cio = msg.cio
-    id = SS.client.app.getIdentifier(msg)
+    id = getIdentifier(msg)
     if !!~ cio.new_states.indexOf  "released"
       $(id).removeClass("ui-state-active")
     else
@@ -28,7 +26,6 @@ exports.buttonJS = (interactor) ->
 
 exports.radiobuttongroupJS = (interactor) ->
   $("#radiobuttongroup-"+interactor.cio.name).buttonset();
-
 
 exports.caroufredselJS = (interactor) ->
   #$("#" + interactor.cio.name + " img").each (index) ->
