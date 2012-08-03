@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-
+$:.unshift(File.dirname(__FILE__)) unless
+  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
+  # -*- coding: utf-8 -*-
 require 'rubygems'
 require "bundler/setup"
 require 'dm-core'
@@ -7,6 +9,7 @@ require "eventmachine"
 require 'hiredis'
 require "json"
 require "MINT-core"
+require "headcontrol"
 
 EM.run {
   require "MINT-core"
@@ -33,5 +36,8 @@ EM.run {
   # start position updater to know about widgets positions in browser
   PositionUpdater.new().start
 
+  # start server to retrieve head movements
+  head = Head.create(:name => 'head')
+  HeadControl.new.start(head)
 }
 

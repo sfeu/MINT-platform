@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 require 'rubygems'
 require "bundler/setup"
@@ -66,7 +67,6 @@ EM.run {
 
   options = AISingleChoice.first(:name=>"option")
   options.process_event :present
-
 
 }
 # Tasks

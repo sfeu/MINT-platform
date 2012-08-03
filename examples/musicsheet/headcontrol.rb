@@ -4,12 +4,8 @@ require "bundler/setup"
 require "MINT-core"
 require "MINT-scxml"
 
-EventMachine::run do
 
-  DataMapper.setup(:default, { :adapter => "redis", :host =>"0.0.0.0",:port=>6379})
-
-  include MINT
-  DataMapper.finalize
+class HeadControl
 
   class StatefulProtocol < EventMachine::Connection
     include EM::Protocols::LineText2
@@ -118,20 +114,19 @@ EventMachine::run do
     end
   end
 
-  Head.all.destroy
-  @head = Head.create(:name => 'head')
+  def initialize
 
-
-#  headModeAgent.addMapping( ExecuteOnStateChange.new(AISingleChoiceElement,["chosen"],headModeAgent.method(:switch_mode)))
-
-  @host = "0.0.0.0"
-  @port = 4242
-  EventMachine::start_server @host, @port, StatefulProtocol do |conn|
-    conn.head=@head
-
-    puts "connection..."
   end
-  puts "Started server on #{@host}:#{@port}"
-  #EventMachine::defer headModeAgent.run
+
+  def start(head, host ="0.0.0.0", port=4242)
+    EventMachine::start_server host, port, StatefulProtocol do |conn|
+      conn.head=head
+
+      puts "connection..."
+    end
+    puts "Started head control server on #{host}:#{port}"
+  end
 end
+
+
 
