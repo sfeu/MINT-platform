@@ -37,7 +37,7 @@ EM.run {
   PositionUpdater.new().start
 
   # start server to retrieve head movements
-  head = Head.create(:name => 'head')
-  HeadControl.new.start(head)
+ # head = Head.create(:name => 'head')
+  #HeadControl.new.start(head)
 }
 

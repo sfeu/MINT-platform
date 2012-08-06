@@ -68,6 +68,7 @@ EM.run {
   options = AISingleChoice.first(:name=>"option")
   options.process_event :present
 
+  Head.create(:name => 'head')
 }
 # Tasks
 
