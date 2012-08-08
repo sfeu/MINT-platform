@@ -1,0 +1,16 @@
+<mapping name="AISingleChoiceElement choose to Head mode" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="3" interactor="Interactor.AIO.AIIN.AIINDiscrete.AIChoiceElement.AISingleChoiceElement" states="chosen" result="aio" process="onchange" />
+      <observation id="2" interactor="Interactor.Head" name="head" states="connected" result="h" process="instant" />
+    </observations>
+    <actions>
+      <backend id="4" call="change_mode" class="MusicSheet" parameter="aio,h"/>
+    </actions>
+  </operator>
+
+</mapping>
+

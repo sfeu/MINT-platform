@@ -48,13 +48,18 @@ subscribeInteractors = (ss, userId,session_id = null) ->
           else
             if "released" in data["new_states"]
               forwardCommand(ss,counter,"button",data["name"],userId)
+
+
+
   # Test that should be later on changed to forward all changes to client if the object is in presenting!
-  pubsub.subscribe("out_channel:Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser")
-  pubsub.on "message", (channel, msg) =>
-    console.log("received msg #{channel}")
-    if channel== "out_channel:Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser"
-      session=":session:#{session_id}" if session_id
-      ss.publish.channel "user:#{userId}","Interactor.AIO.AIOUT.AIOUTContinuous.volume",JSON.parse(msg)
+  pubsub.psubscribe("out_channel:*") #Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser")
+  pubsub.on "pmessage", (pattern,channel, msg) =>
+    if pattern == "out_channel:*"
+      [c,interactor,user] = channel.split ":"
+      console.log("received outchannel msg for channel #{interactor}")
+      #if channel== "out_channel:Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser"
+      #  session=":session:#{session_id}" if session_id
+      ss.publish.channel "user:#{userId}",interactor,JSON.parse(msg)
 
   console.log("Subscribed for displaying interactors")
   subscribed = true

@@ -10,7 +10,7 @@ require 'hiredis'
 require "json"
 require "MINT-core"
 require "headcontrol"
-
+require "music_sheet"
 EM.run {
   require "MINT-core"
 
@@ -21,9 +21,13 @@ EM.run {
   include MINT
   include CUIControl
   include AUIControl
+  include MusicSheet
+
 
   DataMapper.finalize
 
+  h = Head.create(:name => 'head')
+   MusicSheet.head=h
   CUIControl.fill_active_cio_cache
 
   m = MappingManager.new
@@ -36,6 +40,8 @@ EM.run {
   # start position updater to know about widgets positions in browser
   PositionUpdater.new().start
 
+
+  SCXMLClient.new("Interactor.head","head").start
   # start server to retrieve head movements
  # head = Head.create(:name => 'head')
   #HeadControl.new.start(head)

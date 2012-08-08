@@ -7,9 +7,18 @@ exports.sliderJS = (interactor) ->
 
 exports.progressbarJS = (interactor) ->
   $("#progressbar-"+interactor.cio.name).progressbar({ value: interactor.aio.data });
-  ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.volume', (msg,channel) ->
+  ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
       $("#progressbar-volume").progressbar( "option", "value", msg);
 
+exports.minimaloutputsliderJS = (interactor) ->
+  ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
+      console.log("minimal #{msg}")
+      $("#minimaloutputslider-"+interactor.cio.name).css( "left" , msg+"%" );
+
+exports.minimalverticaloutputsliderJS = (interactor) ->
+  ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
+      console.log("minimal #{msg}")
+      $("#minimalverticaloutputslider-"+interactor.cio.name).css( "top" , msg+"%" );
 
 exports.buttonJS = (interactor) ->
   $("#button-"+interactor.cio.name).button().unbind('mouseenter mouseleave');
