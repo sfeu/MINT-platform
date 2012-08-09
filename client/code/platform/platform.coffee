@@ -1,7 +1,9 @@
 # Client-side Code
 pointer = require("/ir/pointer.coffee")
+nose = require("/ir/nose.coffee")
 touch = require("/ir/touch.coffee")
 interactorJS = require("/interactor.coffee")
+
 Array::remove = ( e ) -> @splice i, 1 if (i = @indexOf e) isnt -1
 
 current_user = null
@@ -33,6 +35,7 @@ displaySignInForm = ->
 
 displayMainScreen = ->
   pointer.init(ss)
+  nose.init(ss)
   touch.init(ss)
   ss.rpc 'platform.retrieveActiveInteractors'
  #   interactors.forEach (interactor) ->

@@ -27,11 +27,11 @@ EM.run {
     HTMLHead.create(:name =>"html_header",:css=>"/musicsheet/musicsheet.css",:js=>"/musicsheet/jquery.carouFredSel-5.6.2.js",:states=>[:positioned])
     header.process_event :present
 
-    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => 1280, :x=>10, :y => 5, :states=>[:positioned], :highlightable =>false)
+    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => 1280, :x=>20, :y => 5, :states=>[:positioned], :highlightable =>false)
     a = AIOUTContinuous.create(:name=>"horizontal_level", :label =>"Horizontal Level", :data =>0, :states=>[:organized])
     a.process_event :present
 
-    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>1000, :width => 8, :x=>10, :y => 10, :states=>[:positioned], :highlightable =>false)
+    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>1000, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
     a = AIOUTContinuous.create(:name=>"vertical_level", :label =>"Vertical Level", :data =>0, :states=>[:organized])
     a.process_event :present
 
