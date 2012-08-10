@@ -119,16 +119,19 @@ exports.actions = (req, res, ss) ->
 
   retrieveActiveInteractors: () ->
     console.log "in retrieve interactos session #{JSON.stringify req.session}"
-    R.smembers "mint_interactors:mint_model:name:all", (err,ids) =>
-      for id in ids
-        ((id_copy,userId,session_id) ->
-          R.hmget "mint_interactors:"+id_copy, "mint_model","abstract_states", "states", "name", (err,element) =>
-            if (element[0] is "cui-gfx") and (("displaying" in element[1].split('|')) or "displaying" in element[2].split('|') or ("hidden" in element[1].split('|')) or "hidden" in element[2].split('|') )
-              ((name,uid,sid) ->
-                console.log "session before publish #{JSON.stringify req.session}"
-                forwardCommand(0,"interactor",name,uid,sid)
-              ) element[3],userId,session_id
-        ) id,req.session.userId,req.session.id
+    R.publish "in_channel:Interactor.BrowserScreen.reload:"+req.session.userId,JSON.stringify true
+
+    #R.smembers "mint_interactors:mint_model:name:all", (err,ids) =>
+    #  for id in ids
+    #    ((id_copy,userId,session_id) ->
+    #      R.hmget "mint_interactors:"+id_copy, "mint_model","abstract_states", "states", "name", (err,element) =>
+    #        if (element[0] is "cui-gfx") and (("displaying" in element[1].split('|')) or "displaying" in element[2].split('|') or ("hidden" in element[1].split('|')) or "hidden" in element[2].split('|') )
+    #          ((name,uid,sid) ->
+    #            console.log "publish #{name} uid: #{uid}"
+    #            forwardCommand(ss,0,"interactor",name,uid)
+    #            forwardCommand(ss,0,"init_js",name,uid)
+    #          ) element[3],userId,session_id
+    #    ) id,req.session.userId,req.session.id
     res true
 
   # Quick Chat Demo

@@ -22,6 +22,8 @@ EM.run {
     m = Mouse.create(:name=>"mouse")
     m.process_event :connect
 
+    # for browser refresh handling
+    BrowserScreen.create(:name =>"screen")
 
     header= AIOUT.create(:name =>"html_header",:states=>[:organized],:parent=>"mint-header")
     HTMLHead.create(:name =>"html_header",:css=>"/musicsheet/musicsheet.css",:js=>"/musicsheet/jquery.carouFredSel-5.6.2.js",:states=>[:positioned])
