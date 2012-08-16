@@ -72,6 +72,8 @@ exports.actions = (req, res, ss) ->
          client.write "REGISTER|#{d[1]}"
        if !!~ d[0].indexOf "STATUS"
          ss.publish.channel "MINT-monitor",'updateMapping', JSON.stringify {name: d[1],status:d[2]}
+     client.on('error', (err) ->
+      console.log('Trying to connect to server. Got error: '+err))
      client.open()
      subscribed_mappings = true
     else
