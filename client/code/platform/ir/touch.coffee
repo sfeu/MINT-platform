@@ -51,7 +51,7 @@ exports.init = (ss) ->
 
 recordTouch = (touches) ->
   for touch in touches
-    template = $("<canvas class='touch' width='60' height='60' id='" + touch.id + "'></canvas>")
+    template = $("<canvas class='touch' style='z-index:255;' width='60' height='60' id='" + touch.id + "'></canvas>")
     $("#pointerCanvas").append template
     template.css
       left: touch.x - (template.width() / 2)

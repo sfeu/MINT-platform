@@ -58,7 +58,7 @@ exports.init = (ss)  ->
 
 
 recordPointer = (x,y,color) ->
-    template = $("<canvas class='touch' width='#{pointer_size}' height='#{pointer_size}' id='pointer'></canvas>")
+    template = $("<canvas class='touch' style='z-index:255;' width='#{pointer_size}' height='#{pointer_size}' id='pointer'></canvas>")
     $('#pointerCanvas').append(template)
     template.css left: x - pointer_mid , top: y - pointer_mid
     pointer = template

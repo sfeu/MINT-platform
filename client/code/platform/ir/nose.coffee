@@ -45,7 +45,7 @@ addNose = (nose) ->
   coord_system_height = $('#main').height()
   recalibrate_x(nose.x)
   recalibrate_y(nose.y)
-  nosePointer = $("<canvas class='nose' width='80' height='80' id='nose-canvas'></canvas>")
+  nosePointer = $("<canvas style='z-index:255;' class='nose' width='80' height='80' id='nose-canvas'></canvas>")
   $("#pointerCanvas").append nosePointer
   nosePointer.css
       left: nose.x - (nosePointer.width() / 2)
