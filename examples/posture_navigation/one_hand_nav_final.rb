@@ -1,8 +1,20 @@
 
 module MINT
 
-  class OneHandNavFinal < OneHand
+  class OneHandNavFinal < HandPosture
 
+
+    def getSCXML
+      "#{File.dirname(__FILE__)}/one_hand_nav_final.scxml"
+    end
+
+    def initialize(attributes = nil)
+          super(attributes)
+
+          start
+    end
+
+=begin
     def initialize_statemachine
       if @statemachine.blank?
         @statemachine = Statemachine.build do
@@ -58,5 +70,6 @@ module MINT
         @statemachine.activation= self.method(:activate)
       end
     end
+=end
   end
 end

@@ -1,21 +1,24 @@
+
+# -*- coding: utf-8 -*-
 require 'rubygems'
 require "bundler/setup"
 require 'dm-core'
 require 'redis'
 require "eventmachine"
 require 'hiredis'
+require 'fiber'
 
 EM.run {
   require "MINT-core"
 
-  redis = Redis.connect
-  redis.flushdb
-
   DataMapper.setup(:default, { :adapter => "redis", :host =>"0.0.0.0",:port=>6379})
-
+  @solver = Cassowary::ClSimplexSolver.new
   include MINT
   DataMapper.finalize
-
+  Fiber.new {
+  # for browser refresh handling
+  BrowserScreen.create(:name =>"screen")
+  }
   m = Mouse.create(:name=>"mouse")
   m.process_event :connect
 
@@ -33,10 +36,10 @@ EM.run {
   AISingleChoiceElement.create(:name => "F",:label =>"F - Faca", :parent => "9")
   AISingleChoiceElement.create(:name => "G",:label =>"G - Gato", :parent => "9")
   AISingleChoiceElement.create(:name => "H",:label =>"H - Homen", :parent => "9")
-  AISingleChoiceElement.create(:name => "I",:label =>"I - Índio", :parent => "9")
+  AISingleChoiceElement.create(:name => "I",:label =>"I - Indio", :parent => "9")
   AISingleChoiceElement.create(:name => "J",:label =>"J - Jarra", :parent => "9")
   AISingleChoiceElement.create(:name => "K",:label =>"K - Kiwi", :parent => "9")
-  AISingleChoiceElement.create(:name => "L", :label =>"L - Lápis", :parent => "9")
+  AISingleChoiceElement.create(:name => "L", :label =>"L - Lapis", :parent => "9")
   AISingleChoiceElement.create(:name => "M",:label =>"M - Mala", :parent => "9")
   AISingleChoiceElement.create(:name => "N",:label =>"N - Navio", :parent => "9")
   AISingleChoiceElement.create(:name => "O",:label =>"O - Olho", :parent => "9")
@@ -56,35 +59,37 @@ EM.run {
 
 # CUI - Gfx
 
-  CIC.create( :name => "9", :x=>15, :y=>15, :width =>1280, :height => 1000,:layer=>0, :rows => 5, :cols=> 5)
+  root_cio = CIC.create( :name => "9", :x=>15, :y=>15, :width =>1280, :height => 1000,:layer=>0, :rows => 5, :cols=> 5, :highlightable =>false)
 
-  MarkableRadioButton.create(:name => "A")
-  MarkableRadioButton.create(:name => "B")
-  MarkableRadioButton.create(:name => "C")
-  MarkableRadioButton.create(:name => "D")
-  MarkableRadioButton.create(:name => "E")
-  MarkableRadioButton.create(:name => "F")
-  MarkableRadioButton.create(:name => "G")
-  MarkableRadioButton.create(:name => "H")
-  MarkableRadioButton.create(:name => "I")
-  MarkableRadioButton.create(:name => "J")
-  MarkableRadioButton.create(:name => "K")
-  MarkableRadioButton.create(:name => "L")
-  MarkableRadioButton.create(:name => "M")
-  MarkableRadioButton.create(:name => "N")
-  MarkableRadioButton.create(:name => "O")
-  MarkableRadioButton.create(:name => "P")
-  MarkableRadioButton.create(:name => "Q")
-  MarkableRadioButton.create(:name => "R")
-  MarkableRadioButton.create(:name => "S")
-  MarkableRadioButton.create(:name => "T")
-  MarkableRadioButton.create(:name => "U")
-  MarkableRadioButton.create(:name => "V")
-  MarkableRadioButton.create(:name => "W")
-  MarkableRadioButton.create(:name => "X")
-  MarkableRadioButton.create(:name => "Y")
+  MarkableRadioButton.create(:name => "A", :highlightable => true)
+  MarkableRadioButton.create(:name => "B", :highlightable => true)
+  MarkableRadioButton.create(:name => "C", :highlightable => true)
+  MarkableRadioButton.create(:name => "D", :highlightable => true)
+  MarkableRadioButton.create(:name => "E", :highlightable => true)
+  MarkableRadioButton.create(:name => "F", :highlightable => true)
+  MarkableRadioButton.create(:name => "G", :highlightable => true)
+  MarkableRadioButton.create(:name => "H", :highlightable => true)
+  MarkableRadioButton.create(:name => "I", :highlightable => true)
+  MarkableRadioButton.create(:name => "J", :highlightable => true)
+  MarkableRadioButton.create(:name => "K", :highlightable => true)
+  MarkableRadioButton.create(:name => "L", :highlightable => true)
+  MarkableRadioButton.create(:name => "M", :highlightable => true)
+  MarkableRadioButton.create(:name => "N", :highlightable => true)
+  MarkableRadioButton.create(:name => "O", :highlightable => true)
+  MarkableRadioButton.create(:name => "P", :highlightable => true)
+  MarkableRadioButton.create(:name => "Q", :highlightable => true)
+  MarkableRadioButton.create(:name => "R", :highlightable => true)
+  MarkableRadioButton.create(:name => "S", :highlightable => true)
+  MarkableRadioButton.create(:name => "T", :highlightable => true)
+  MarkableRadioButton.create(:name => "U", :highlightable => true)
+  MarkableRadioButton.create(:name => "V", :highlightable => true)
+  MarkableRadioButton.create(:name => "W", :highlightable => true)
+  MarkableRadioButton.create(:name => "X", :highlightable => true)
+  MarkableRadioButton.create(:name => "Y", :highlightable => true)
 
+
+  root_cio.calculate_container(@solver,20)
 
   root.process_event :present
 
-}
+  }

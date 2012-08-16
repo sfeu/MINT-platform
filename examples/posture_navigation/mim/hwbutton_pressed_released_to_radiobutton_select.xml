@@ -1,0 +1,15 @@
+<mapping name="Hardware Button click to RadioButton select" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.HandPosture" states="selected"  result="b" process="onchange" />
+      <!--observation id="3" interactor="Interactor.HWButton" name="button" states="released" process="onchange" /-->
+      <observation id="4" interactor="Interactor.HandPosture" states="confirmed" name="b.name" process="onchange" result="r" />
+    </observations>
+    <actions>
+      <event id="5" type="select" target="r"/>
+    </actions>
+  </operator>
+</mapping>
