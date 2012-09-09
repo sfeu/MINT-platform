@@ -7,7 +7,7 @@
     <transition event="next_gesture" target="next"><!--   edge-path [next]  x=70.0 y=330.0 pointx=0.0 pointy=-49.0 offsetx=-7.0 offsety=37.0  --></transition>
     <transition event="prev_gesture" target="previous"><!--   edge-path [previous]  x=370.0 y=340.0 pointx=-1.0 pointy=-14.0 offsetx=77.0 offsety=-52.0  --></transition>
     <state id="confirmed"><!--   node-size-and-position x=30.0 y=40.0 w=100.0 h=40.0  -->
-     <transition event="select" target="selected"><!--   edge-path [selected]  x=150.0 y=90.0  --></transition>
+     <transition event="select"><!--   edge-path [selected]  x=160.0 y=90.0 pointx=0.0 pointy=-10.0 offsetx=-5.0 offsety=0.0  --></transition>
     </state>
     <state id="selected"><!--   node-size-and-position x=180.0 y=40.0 w=100.0 h=40.0  -->
      <transition event="confirm" target="confirmed"><!--   edge-path [confirmed]  pointx=0.0 pointy=-10.0 offsetx=5.0 offsety=0.0  --></transition>
