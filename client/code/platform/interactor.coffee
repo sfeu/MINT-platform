@@ -1,3 +1,6 @@
+exports.htmlheadJS = (interactor) ->
+  $("#htmlhead-"+interactor.cio.name).appendTo("#mint-header")
+
 exports.sliderJS = (interactor) ->
   $("#slider-"+interactor.cio.name).slider
     slide: (event, ui) ->
@@ -41,6 +44,10 @@ exports.caroufredselJS = (interactor) ->
   #  src = $(this).attr("src").replace(".png", "_thumb.png")
   #  $('#pager').append "<img src=\"" + src + "\" border=\"0\" />"
 
+  #copy images into the right container div
+  $("#caroufredsel-sheets > img").appendTo("#sheets")
+
+  #init the carousel
   $("#" + interactor.cio.name).carouFredSel
     items: interactor.cio["items"]
     circular: (interactor.cio["circular"] is true)
