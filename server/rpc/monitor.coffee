@@ -6,6 +6,9 @@ subscribed_interactors = false
 subscribed_mappings = false
 console.log "called"
 
+# connection to mapping server
+mapping_client = null
+
 subscribeInteractors = (ss) ->
   if not subscribed_interactors
     #config = SS.config.redis_pubsub || SS.config.redis
@@ -60,21 +63,21 @@ exports.actions = (req, res, ss) ->
     if not subscribed_mappings
      TCPClient = require('simpletcp').client()
 
-     client = new TCPClient("client1", "localhost", 8000, ->
-       client.write "LIST"
+     mapping_client = new TCPClient("client1", "localhost", 8000, ->
+       mapping_client.write "LIST"
        #client.close()
      )
-     client.on "data", (obj) ->
-       d = obj.split "|"
+     mapping_client.on "data", (obj) ->
+       d = obj.split "%"
        console.log "data #{obj}"
        if !!~ d[0].indexOf "MAPPING"
          #SS.publish.broadcast 'newMapping', d[1]
-         client.write "REGISTER|#{d[1]}"
-       if !!~ d[0].indexOf "STATUS"
+         mapping_client.write "REGISTER%#{d[1]}"
+       if !!~ d[0].indexOf "INFO"
          ss.publish.channel "MINT-monitor",'updateMapping', JSON.stringify {name: d[1],status:d[2]}
-     client.on('error', (err) ->
+     mapping_client.on('error', (err) ->
       console.log('Trying to connect to server. Got error: '+err))
-     client.open()
+     mapping_client.open()
      subscribed_mappings = true
     else
      console.log "already subscribed to mappings"
