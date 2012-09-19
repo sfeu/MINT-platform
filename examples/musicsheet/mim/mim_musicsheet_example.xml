@@ -3,14 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
 
-  <include href="left_button_aisinglepresence_enter.xml" start="true"/>
-  <!--include href="left_button_aisinglepresence_next.xml" start="true"/>
+ <!--include href="left_button_aisinglepresence_next.xml" start="true"/>
   <include href="right_button_aisinglepresence_prev.xml" start="true"/-->
-  <include href="head_tilting_right_to_aisinglepresence_next.xml" start="true"/>
-  <include href="head_tilting_left_to_aisinglepresence_prev.xml" start="true"/>
-  <include href="head_looking_right_to_aisinglepresence_next.xml" start="true"/>
-  <include href="head_looking_left_to_aisinglepresence_prev.xml" start="true"/>
-  <include href="head_nodding_to_aisinglepresence_next.xml" start="true"/>
   <include href="aisinglechoiceelement_choose_to_head_mode.xml" start="true"/>
   <include href="bind_head_tilting_to_horizontal_level.xml" start="true"/>
 

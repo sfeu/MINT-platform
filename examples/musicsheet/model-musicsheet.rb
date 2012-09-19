@@ -12,33 +12,33 @@ EM.run {
   require "MINT-core"
 
   redis = Redis.connect
-  #redis.flushdb
+  redis.flushdb
 
   DataMapper.setup(:default, { :adapter => "redis", :host =>"0.0.0.0",:port=>6379})
 
   include MINT
   DataMapper.finalize
   Fiber.new {
-    m = Mouse.create(:name=>"mouse")
-    m.process_event :connect
+
+    # IRM Model Interactors
+    ########################
+    mouse = Mouse.create(:name=>"mouse")
 
     # for browser refresh handling
     BrowserScreen.create(:name =>"screen")
 
-    header= AIOUT.create(:name =>"html_header",:states=>[:organized],:parent=>"mint-header")
-    HTMLHead.create(:name =>"html_header",:css=>"/musicsheet/musicsheet.css",:js=>"/musicsheet/jquery.carouFredSel-5.6.2.js",:states=>[:positioned])
-    header.process_event :present
+    # AIM Model Interactors
+    ########################
 
-    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => 1280, :x=>20, :y => 5, :states=>[:positioned], :highlightable =>false)
-    a = AIOUTContinuous.create(:name=>"horizontal_level", :label =>"Horizontal Level", :data =>0, :states=>[:organized])
-    a.process_event :present
+    root = AIContainer.create(:name =>"html_header",:states=>[:organized])
 
-    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>1000, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
-    a = AIOUTContinuous.create(:name=>"vertical_level", :label =>"Vertical Level", :data =>0, :states=>[:organized])
-    a.process_event :present
 
-    root = AIContainer.create(:name=>"interactive_sheet", :children => "sheets|option")
-    sheets = AISinglePresence.create(:name=>"sheets",:parent => "interactive_sheet",:children =>"page1|page2|page3|page4|page5|page6|page7|page8")
+    nav_start= AIContainer.create(:name=>"interactive_sheet", :children => "horizontal_level|vertical_level|sheets|option")
+    AIOUTContinuous.create(:name=>"horizontal_level",  :data =>0,:parent=>"interactive_sheet")
+
+    AIOUTContinuous.create(:name=>"vertical_level", :data =>0,:parent=>"interactive_sheet")
+
+    AISinglePresence.create(:name=>"sheets",:parent => "interactive_sheet",:children =>"page1|page2|page3|page4|page5|page6|page7|page8")
     AIOUT.create(:name =>"page1",:parent => "sheets")
     AIOUT.create(:name =>"page2",:parent => "sheets")
     AIOUT.create(:name =>"page3",:parent => "sheets")
@@ -49,16 +49,23 @@ EM.run {
     AIOUT.create(:name =>"page8",:parent => "sheets")
 
 
-    AISingleChoice.create(:name=>"option", :label=>"Options", :children => "nodding|tilting|turning",:parent => "interactive_sheet")
+    AISingleChoice.create(:name=>"option", :children => "nodding|tilting|turning",:parent => "interactive_sheet")
     AISingleChoiceElement.create(:name=>"nodding",:label=>"Nodding",:parent => "option")
     AISingleChoiceElement.create(:name=>"tilting",:label=>"Tilting",:parent => "option")
     AISingleChoiceElement.create(:name=>"turning",:label=>"Turning",:parent => "option")
 
-    AUIControl.organize(root)
+    AUIControl.organize(nav_start)
     root.save
 
-    CIC.create(:name =>"interactive_sheet",:x=>15, :y=>15, :width =>1280, :height => 1000,:layer=>0, :rows=>2, :cols=>1,:states=>[:positioned], :width=>1180, :height => 820)
-    CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>0,:width=>1198, :height => 840,:states=>[:positioned], :highlightable => true)
+    # CIM HTML GfX Model Interactors
+    ###################################
+
+    HTMLHead.create(:name =>"html_header",:css=>"/musicsheet/musicsheet.css",:js=>"/musicsheet/jquery.carouFredSel-5.6.2.js",:states=>[:positioned])
+    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => 1280, :x=>20, :y => 5, :states=>[:positioned], :highlightable =>false)
+    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>1000, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
+
+    CIC.create(:name =>"interactive_sheet",:x=>15, :y=>15, :width =>1280, :height => 1000,:layer=>0, :rows=>2, :cols=>1,:states=>[:positioned])
+    CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>0,:width=>1198,:layer=>1,  :height => 840,:states=>[:positioned], :highlightable => true)
     CarouFredSelImage.create(:name=>"page1",:path=>"/musicsheet/sheets/page1.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
     CarouFredSelImage.create(:name=>"page2",:path=>"/musicsheet/sheets/page2.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
     CarouFredSelImage.create(:name=>"page3",:path=>"/musicsheet/sheets/page3.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
@@ -73,12 +80,14 @@ EM.run {
     RadioButton.create(:name => "tilting",:x=>440, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
     RadioButton.create(:name => "turning",:x=>840, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
 
-    sheets = AISinglePresence.first(:name=>"sheets")
-    sheets.process_event :present
+    # Connect IRMs and present app
+    ###################################
 
-    options = AISingleChoice.first(:name=>"option")
-    options.process_event :present
+    mouse.process_event :connect
 
+
+    root.process_event :present
+    nav_start.process_event :present
 
   }.resume nil
 }
