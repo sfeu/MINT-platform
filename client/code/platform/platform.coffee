@@ -91,8 +91,11 @@ displayInteractor = (interactor) ->
     elem = null
     if ("hidden" in interactor.cio.states.split('|')) or "hidden" in interactor.cio.abstract_states.split('|')
       fim.hide()
-    if (interactor.aio.parent and $('#'+interactor.aio.parent).length > 0)
-      fim.appendTo('#'+interactor.aio.parent)
+
+    if (interactor.aio.parent)
+      parent = getDisplayedInteractor(interactor.aio.parent)
+      parent = getIdentifier(parent)
+      fim.appendTo(parent)
     else
       fim.appendTo('#main')
     fim.addClass("displayed")
@@ -129,10 +132,15 @@ setUser = (userid) ->
 
 
 hasUnresolvedDependencies = (interactor) ->
-  return false if not interactor.cio.depends
-  dependencies = interactor.cio.depends.split("|")
-  for dependency in dependencies
-    return true if dependencyNotMet(dependency)
+  return false if not interactor.cio.depends and not interactor.aio.parent
+  if interactor.cio.depends
+    dependencies = interactor.cio.depends.split("|")
+    for dependency in dependencies
+      return true if dependencyNotMet(dependency)
+  if interactor.aio.parent
+    dependencies = interactor.aio.parent.split("|")
+    for dependency in dependencies
+      return true if dependencyNotMet(dependency)
   return false
 
 dependencyNotMet = (dependency) ->
@@ -140,6 +148,10 @@ dependencyNotMet = (dependency) ->
     return false if !!~ interactor.cio.name.indexOf dependency
   return true
 
+getDisplayedInteractor = (name) ->
+  for interactor in window.displayedInteractors
+     return interactor if !!~ interactor.cio.name.indexOf name
+  return null
 
 window.displayedInteractors = []
 window.unresolvedDepsInteractors = []
