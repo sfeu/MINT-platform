@@ -100,7 +100,7 @@ exports.actions = (req, res, ss) ->
   updatePointer: (coords) ->
     ss.publish.channel "user:#{req.session.userId}","pointer",coords
     r = JSON.stringify {"cmd": "pointer", "data" : [coords.x,coords.y]}
-    R.publish "data:Interactor.Pointer.Mouse.mouse:user:#{req.session.userId}",r
+    R.publish "data:Interactor.IR.IRMode.Pointer.Mouse.mouse:user:#{req.session.userId}",r
 
   updateInteractorSize: (coords) ->
     console.log("update interactor #{coords}")
@@ -108,7 +108,7 @@ exports.actions = (req, res, ss) ->
 
   updateMouse: (cmd) ->
     r = JSON.stringify {"cmd": "button", "data" : cmd}
-    R.publish "data:Interactor.Pointer.Mouse.mouse:user:#{req.session.userId}",r
+    R.publish "data:Interactor.IR.IRMode.Pointer.Mouse.mouse:user:#{req.session.userId}",r
 
   updateSlider: ([name,value]) ->
     R.publish "in_channel:Interactor.AIO.AIIN.AIINContinuous."+name+":"+req.session.userId,value
