@@ -16,12 +16,12 @@ exports.progressbarJS = (interactor) ->
 exports.minimaloutputsliderJS = (interactor) ->
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
       console.log("minimal #{msg}")
-      $("#minimaloutputslider-"+interactor.cio.name).css( "left" , msg+"%" );
+      $("#"+interactor.cio.name).css( "left" , msg+"%" );
 
 exports.minimalverticaloutputsliderJS = (interactor) ->
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
       console.log("minimal #{msg}")
-      $("#minimalverticaloutputslider-"+interactor.cio.name).css( "top" , msg+"%" );
+      $("#"+interactor.cio.name).css( "top" , msg+"%" );
 
 exports.buttonJS = (interactor) ->
   $("#button-"+interactor.cio.name).button().unbind('mouseenter mouseleave');
