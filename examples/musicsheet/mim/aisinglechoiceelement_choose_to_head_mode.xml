@@ -5,7 +5,7 @@
   <operator id="1" type="sequential">
     <observations>
       <observation id="3" interactor="Interactor.AIO.AIIN.AIINDiscrete.AIChoiceElement.AISingleChoiceElement" states="chosen" result="aio" process="onchange" />
-      <observation id="2" interactor="Interactor.Head" name="head" states="connected" result="h" process="instant" />
+      <observation id="2" interactor="Interactor.IR.IRMode.Body.Head" name="head" states="connected" result="h" process="instant" />
     </observations>
     <actions>
       <backend id="4" call="change_mode" class="MusicSheet" parameter="aio,h"/>

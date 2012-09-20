@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
   <operator id = "1" type="sequential">
     <observations>
-      <observation id="22" interactor="Interactor.Head" name="head" states="tilting_detection" process="onchange"/>
+      <observation id="22" interactor="Interactor.IR.IRMode.Body.Head" name="head" states="tilting_detection" process="onchange"/>
       <observation id="23" interactor="Interactor.AIO.AIOUT.AIOUTContinuous" name="horizontal_level" states="presenting" process="instant"/>
     </observations>
     <actions>
-      <bind id="33" interactor_in="Interactor.Head" name_in="head" attr_in="head_angle" interactor_out="Interactor.AIO.AIOUT.AIOUTContinuous" name_out="horizontal_level" attr_out="data" transformation="head_angle_transformation" class="MusicSheet"/>
+      <bind id="33" interactor_in="Interactor.IR.IRMode.Body.Head" name_in="head" attr_in="head_angle" interactor_out="Interactor.AIO.AIOUT.AIOUTContinuous" name_out="horizontal_level" attr_out="data" transformation="head_angle_transformation" class="MusicSheet"/>
     </actions>
   </operator>
 </mapping>
