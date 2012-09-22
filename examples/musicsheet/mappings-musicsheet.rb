@@ -27,8 +27,7 @@ EM.run {
   DataMapper.finalize
 
   h = Head.create(:name => 'head')
-  MusicSheet.head=h
-
+   MusicSheet.head=h
   CUIControl.fill_active_cio_cache
 
   m = MappingManager.new
@@ -44,4 +43,5 @@ EM.run {
 
   SCXMLClient.new("Interactor.head","head").start
 
+}
 
