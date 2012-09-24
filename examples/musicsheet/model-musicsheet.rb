@@ -17,6 +17,9 @@ EM.run {
   DataMapper.finalize
   Fiber.new {
 
+    # Clean old
+    AUIControl.suspend_all
+
     # IRM Model Interactors
     ########################
     mouse = Mouse.create(:name=>"mouse")

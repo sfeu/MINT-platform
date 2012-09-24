@@ -3,10 +3,10 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
 
-  <include href="hwbutton_pressed_released_to_radiobutton_select.xml" start="true"/>
+  <!--include href="hwbutton_pressed_released_to_radiobutton_select.xml" start="true"/>
   <include href="handgesture_previous_to_aio_prev.xml" start="true"/>
   <include href="handgesture_next_to_aio_next.xml" start="true"/>
-  <include href="handgesture_confirm_to_aichoiceelement_choose.xml" start="true"/>
+  <include href="handgesture_confirm_to_aichoiceelement_choose.xml" start="true"/-->
 
 </mim>
 

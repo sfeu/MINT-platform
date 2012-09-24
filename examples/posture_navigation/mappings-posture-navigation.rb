@@ -9,7 +9,7 @@ require "eventmachine"
 require 'hiredis'
 require "json"
 require "MINT-core"
-require "one_hand_nav_final"
+# require "one_hand_nav_final"
 
 EM.run {
   require "MINT-core"
@@ -24,7 +24,7 @@ EM.run {
 
   DataMapper.finalize
 
-  posture = OneHandNavFinal.create(:name => "hand-posture")
+  #posture = OneHandNavFinal.create(:name => "hand-posture")
   #posture.start
 
   CUIControl.fill_active_cio_cache
