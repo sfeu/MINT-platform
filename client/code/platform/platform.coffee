@@ -57,21 +57,24 @@ hideInteractor = (interactor) ->
   else
     $(identifier).hide()
 
-highlightInteractor = (highlight,interactor) ->
+unhighlightInteractor = (interactor) ->
   identifier = getIdentifier(interactor)
-  if highlight
-    $(identifier).addClass("ui-state-hover")
-    $(identifier).removeClass("displayed")
-  else
-    $(identifier).removeClass("ui-state-hover")
-    $(identifier).addClass("displayed")
+  $(identifier).removeClass("ui-state-hover")
+  $(identifier).addClass("displayed")
 
-selectInteractor = (select,interactor) ->
+highlightInteractor = (interactor) ->
+  identifier = getIdentifier(interactor)
+  $(identifier).addClass("ui-state-hover")
+  $(identifier).removeClass("displayed")
+
+
+selectInteractor = (interactor) ->
   identifier = getInputIdentifier(interactor)
-  if select
-    $(identifier).attr('checked',true)
-  else
-    $(identifier).attr('checked',false)
+  $(identifier).attr('checked',true)
+
+unselectInteractor = (interactor) ->
+  identifier = getInputIdentifier(interactor)
+  $(identifier).attr('checked',false)
 
 displayInteractor = (interactor) ->
   console.log interactor
@@ -105,7 +108,9 @@ displayInteractor = (interactor) ->
       console.log("sizes #{elem.offset().left}/#{elem.offset().top} - #{elem.outerWidth()}/#{elem.outerHeight()}")
       ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,elem,elem.outerWidth(),elem.outerHeight()))
 
-    window.displayedInteractors.push interactor
+    window.displayedInteractors[interactor.cio.name] = interactor
+
+    proccessCommandsFromQueue(interactor.aio.name)
 
     for interactor in window.unresolvedDepsInteractors
           if not hasUnresolvedDependencies(interactor)
@@ -130,7 +135,6 @@ initJSInteractor = (interactor) ->
 setUser = (userid) ->
   $('#user').text("User:"+userid)
 
-
 hasUnresolvedDependencies = (interactor) ->
   return false if not interactor.cio.depends and not interactor.aio.parent
   if interactor.cio.depends
@@ -144,29 +148,50 @@ hasUnresolvedDependencies = (interactor) ->
   return false
 
 dependencyNotMet = (dependency) ->
-  for interactor in window.displayedInteractors
-    return false if !!~ interactor.cio.name.indexOf dependency
-  return true
+  !window.displayedInteractors[dependency]?
 
 getDisplayedInteractor = (name) ->
-  for interactor in window.displayedInteractors
-     return interactor if !!~ interactor.cio.name.indexOf name
-  return null
+  window.displayedInteractors[name]
 
-window.displayedInteractors = []
+queueCommand = (name, command, params) ->
+  if window.commandQueue[name]?
+    window.commandQueue[name].push([command,params])
+  else
+    window.commandQueue[name] = [[command,params]]
+
+proccessCommandsFromQueue = (name) ->
+  return if !commandQueue[name]?
+  for interactor_data in window.commandQueue[name]
+     processCommand(interactor_data[0],interactor_data[1])
+  window.commandQueue[name] = null
+
+processCommand = (command,data) ->
+  if !getDisplayedInteractor(data.aio.name)?
+    console.log "queued command: #{data['command']} for #{data.aio.name}"
+    queueCommand(data.aio.name,command,data)
+  else
+    console.log "process queued command: #{data['command']} for #{data.aio.name}"
+    switch command
+        when 'hide' then hideInteractor(data)
+        when 'init_js' then initJSInteractor(data)
+        when 'highlight' then highlightInteractor(data)
+        when 'unhighlight' then unhighlightInteractor(data)
+        when 'select' then selectInteractor(data)
+        when 'unselect' then unselectInteractor(data)
+
+window.displayedInteractors = {}
 window.unresolvedDepsInteractors = []
+
+# Stores all commands received for an interactor that not has been added in hTML
+window.commandQueue = {}
 
 ss.event.on 'command', (msg,channel) ->
   data = JSON.parse msg
-  console.log "command: #{data['command']} for #{data.aio.name}"
-  switch data["command"]
-    when "interactor" then displayInteractor(data)
-    when 'hide' then hideInteractor(data)
-    when 'init_js' then initJSInteractor(data)
-    when 'highlight' then highlightInteractor(true,data)
-    when 'unhighlight' then highlightInteractor(false,data)
-    when 'select' then selectInteractor(true,data)
-    when 'unselect' then selectInteractor(false,data)
+  if !!~ data["command"].indexOf "interactor"
+    console.log "process command: #{data['command']} for #{data.aio.name}"
+    displayInteractor(data)
+  else
+    processCommand(data["command"],data)
 
 ss.rpc 'platform.init', (user) ->
   console.log(user)
