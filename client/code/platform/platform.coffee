@@ -2,6 +2,7 @@
 pointer = require("/ir/pointer.coffee")
 nose = require("/ir/nose.coffee")
 touch = require("/ir/touch.coffee")
+multitouch = require("/ir/multitouch.coffee")
 interactorJS = require("/interactor.coffee")
 
 Array::remove = ( e ) -> @splice i, 1 if (i = @indexOf e) isnt -1
@@ -37,6 +38,7 @@ displayMainScreen = ->
   pointer.init(ss)
   nose.init(ss)
   touch.init(ss)
+  multitouch.init(ss)
   ss.rpc 'platform.retrieveActiveInteractors'
  #   interactors.forEach (interactor) ->
  #     displayInteractor(interactor)

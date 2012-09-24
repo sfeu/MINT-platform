@@ -106,12 +106,12 @@ drawTouches = ->
 
 subscribeServer = (ss) ->
   ss.event.on "thumb", (data,channel) ->
-    a = jQuery.parseJSON(data)
+    #a = jQuery.parseJSON(data)
     console.log "received thumb:#{data}"
-    switch a.cmd
+    switch data.cmd
       when "NEW"
-        recordTouch a.touches
+        recordTouch data.touches
       when "DEL"
-        removeTouch a.touches
+        removeTouch data.touches
       when "POS"
-        moveTouch a.touches
+        moveTouch data.touches

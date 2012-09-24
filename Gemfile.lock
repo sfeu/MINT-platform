@@ -32,6 +32,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    activesupport (2.3.14)
     addressable (2.2.8)
     bcrypt-ruby (3.0.1)
     cassowary (1.0.1)
@@ -70,6 +71,7 @@ DEPENDENCIES
   MINT-core!
   MINT-scxml!
   MINT-statemachine!
+  activesupport
   cassowary (= 1.0.1)
   dm-core
   dm-redis-adapter!
