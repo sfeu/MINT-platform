@@ -4,7 +4,7 @@
 
   <operator id="1" type="complementary">
     <observations>
-      <observation id="2" interactor="Interactor.AIO.AIIN.AIINDiscrete.AICommand" name="reset" states="activated" result="c" process="onchange" />
+      <observation id="2" interactor="Interactor.AIO.AIIN.AIINDiscrete.AIReference.AICommand" name="reset" states="activated" result="c" process="onchange" />
     </observations>
     <actions>
       <backend id="3" call="reset" class="ExampleApp" parameter="c"/>
@@ -12,12 +12,3 @@
   </operator>
 
 </mapping>
-
-<!--
-
-  o8 = Observation.new(:element =>"Interactor.AIO.AIIN.AIINDiscrete.AICommand",:name => "reset", :states =>[:activated], :result => "c")
-  a5 = BackendAction.new(:call => ExampleApp.method(:reset),:parameter => "c")
-  m5 = ComplementaryMapping.new(:name=>"Reset Execution",:observations => [o8],:actions =>[a5])
-  m5.start
-
--->
