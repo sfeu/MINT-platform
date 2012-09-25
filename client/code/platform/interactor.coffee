@@ -4,9 +4,6 @@ exports.htmlheadJS = (interactor) ->
 exports.labelJS = (interactor) ->
   $("#label-"+interactor.cio.name).prependTo("#"+interactor.aio.refers)
 
-exports.buttonlabelJS = (interactor) ->
-  $("#label-"+interactor.cio.name).appendTo("#button-"+interactor.aio.refers)
-
 exports.sliderJS = (interactor) ->
   $("#slider-"+interactor.cio.name).slider
     slide: (event, ui) ->
