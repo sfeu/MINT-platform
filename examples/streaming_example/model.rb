@@ -37,19 +37,29 @@ EM.run {
     ########################
     header = AIContainer.create(:name =>"html_header",:states=>[:organized],:children => "")
 
-    app = AIContainer.create(:name=>"streaming_example", :states=>[:organized], :children => "reset|volume|slider")
+    app = AIContainer.create(:name=>"streaming_example", :states=>[:organized], :children => "reset|reset_ref|volume|volume_ref|slider|slider_ref")
     AICommand.create(:name=>"reset", :label =>"Reset",:parent=>"streaming_example", :states=>[:organized])
+    AIReference.create(:name=>"reset_ref", :text=>"Reset", :refers =>"reset",:parent=>"streaming_example", :states=>[:organized])
+
     AIOUTContinuous.create(:name=>"volume", :data =>0,:parent=>"streaming_example", :states=>[:organized])
-    AIINContinuous.create(:name=>"slider", :label =>"Slider", :data =>0,:parent=>"streaming_example", :states=>[:organized])
+    AIReference.create(:name=>"volume_ref", :text=>"Volume", :refers =>"volume",:parent=>"streaming_example", :states=>[:organized])
+
+    AIINContinuous.create(:name=>"slider", :data =>0,:parent=>"streaming_example", :states=>[:organized])
+    AIReference.create(:name=>"slider_ref", :text=>"Slider", :refers =>"slider",:parent=>"streaming_example", :states=>[:organized])
 
     # CIM HTML GfX Model Interactors
     ###################################
     HTMLHead.create(:name =>"html_header",:css=>"",:js=>"",:states=>[:positioned])
 
     CIC.create(:name =>"streaming_example",:x=>15, :y=>15, :width =>580, :height => 300,:layer=>0, :rows=>3, :cols=>1,:states=>[:positioned])
-    Button.create(:name=>"reset",:height =>60, :width => 200, :x=>380, :y => 170, :states=>[:positioned], :highlightable =>true)
-    ProgressBar.create(:name=>"volume",:height =>80, :width => 300, :x=>40, :y => 120, :states=>[:positioned], :highlightable =>true)
-    Slider.create(:name=>"slider",:height =>60, :width => 300, :x=>40, :y => 20, :states=>[:positioned], :highlightable =>true)
+    Button.create(:name=>"reset",:height =>60, :width => 200, :x=>200, :y => 230, :states=>[:positioned], :highlightable =>true)
+    ButtonLabel.create(:name=>"reset_ref",:highlightable =>false,:states=>[:positioned],:depends => "reset")
+
+    ProgressBar.create(:name=>"volume",:height =>80, :width => 500, :x=>40, :y => 120, :states=>[:positioned], :highlightable =>true)
+    Label.create(:name=>"volume_ref",:highlightable =>false,:states=>[:positioned],:depends => "volume")
+
+    Slider.create(:name=>"slider",:height =>60, :width => 500, :x=>40, :y => 20, :states=>[:positioned], :highlightable =>true)
+    Label.create(:name=>"slider_ref",:highlightable =>false,:states=>[:positioned],:depends => "slider")
 
     # Connect IRMs and present app
     ###################################
