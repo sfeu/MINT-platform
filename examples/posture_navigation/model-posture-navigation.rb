@@ -20,7 +20,9 @@ EM.run {
 
     # IRM Model Interactors
     ########################
-    mouse = Mouse.create(:name=>"mouse")
+    #mouse = Mouse.create(:name=>"mouse")
+
+    pose = OneHandPoseNavigation.create(:name => "pose")
 
     # for browser refresh handling
     BrowserScreen.create(:name =>"screen")
@@ -33,7 +35,7 @@ EM.run {
 
     root = AISingleChoice.create(:name=>"9",:children =>"A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y")
 
-    AISingleChoiceElement.create(:name => "A", :text =>"A - Abelinha", :parent => "9")
+    first = AISingleChoiceElement.create(:name => "A", :text =>"A - Abelinha", :parent => "9")
     AISingleChoiceElement.create(:name => "B",:text =>"B - Bolo", :parent => "9")
     AISingleChoiceElement.create(:name => "C",:text =>"C -Caracol", :parent => "9")
     AISingleChoiceElement.create(:name => "D",:text =>"D- Dado", :parent => "9")
@@ -101,11 +103,12 @@ EM.run {
     # Connect IRMs and present app
     ###################################
 
-    mouse.process_event :connect
+    #mouse.process_event :connect
 
     header.process_event :present
     root.process_event :present
 
+    AISingleChoiceElement.first(:name => "A").process_event :focus
   }.resume nil
 
 }

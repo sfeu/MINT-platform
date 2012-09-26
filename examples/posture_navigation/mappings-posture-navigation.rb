@@ -40,7 +40,7 @@ EM.run {
   #PositionUpdater.new().start
 
 
-  SCXMLClient.new("Interactor.HandPosture*","hand-posture").start
+  SCXMLClient.new("Interactor.IR.IRMode.Body.Hand.Pose;*","pose").start
   # start server to retrieve head movements
  # head = Head.create(:name => 'head')
   #HeadControl.new.start(head)
