@@ -19,10 +19,6 @@ EM.run {
 
     AISingleChoiceElement.first(:name => "A").process_event :focus
 
-    #pose = OneHandPoseNavigation.first(:name => "pose")
-    #pose.process_event :connect
-    #pose.process_event :one_hand
-    #pose.process_event :next_pose
   }.resume nil
 
 }

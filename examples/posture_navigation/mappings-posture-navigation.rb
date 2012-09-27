@@ -9,6 +9,7 @@ require "eventmachine"
 require 'hiredis'
 require "json"
 require "MINT-core"
+require "sound"
 # require "one_hand_nav_final"
 
 EM.run {
@@ -21,8 +22,11 @@ EM.run {
   include MINT
   include CUIControl
   include AUIControl
+  include Sound
 
   DataMapper.finalize
+
+  Sound.init
 
   #posture = OneHandNavFinal.create(:name => "hand-posture")
   #posture.start
@@ -30,7 +34,7 @@ EM.run {
   CUIControl.fill_active_cio_cache
 
   m = MappingManager.new
-  m.load("../../../MINT-core/lib/MINT-core/model/mim/mim_default.xml")
+  # m.load("../../../MINT-core/lib/MINT-core/model/mim/mim_default.xml")
   m.load("./mim/mim_posture_navigation_example.xml")
 
   # Start server to connect mapping tool
