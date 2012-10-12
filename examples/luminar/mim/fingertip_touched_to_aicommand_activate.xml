@@ -1,0 +1,18 @@
+<mapping name="Sync Mouse press to AICommand activate" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de mint-mappings.xsd">
+
+  <operator type="sequential" id="1">
+    <observations>
+      <observation id="2" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="p" states="touched" process="onchange"/>
+      <observation id="3" interactor="Interactor.AIO.AIIN.AIINDiscrete.AIReference.AICommand" states="focused" result="c" process="instant"/>
+    </observations>
+    <actions>
+      <backend id="4" call="touch" class="CalibrationApp" parameter="c,p"/>
+      <backend id="5" call="play_click" class="Sound" />
+
+    </actions>
+  </operator>
+
+</mapping>
+

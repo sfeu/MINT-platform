@@ -1,0 +1,19 @@
+<?xml version='1.0'?>
+<mim name="Streaming Example" xmlns="http://www.multi-access.de"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_defocus_to_cio_unhighlight.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_present_to_cio_display.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_suspend_to_cio_hide.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_stop_to_cio_highlight.xml" start="true" />
+  <!-- Gesture-based Navigation -->
+
+  <include href="fingertip_stop_to_cio_highlight.xml" start="true"/>
+  <!--include href="reset_execution.xml" start="true"/-->
+  <include href="fingertip_touched_to_aicommand_activate.xml" start="true"/>
+  <!--include href="mouse_press_to_aicommand_activate.xml" start="true"/-->
+</mim>
+
+

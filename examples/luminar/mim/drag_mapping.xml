@@ -1,0 +1,23 @@
+<mapping name="Move Mapping" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+  <operator id = "1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="p" states="touched" process="onchange"/>
+      <backend_observation id="10" call="find_cio_from_coordinates" class="CUIControl" result="cio" parameter="f.x,f.y"/>
+      <observation id="4" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="p.name" states="moving" process="continuous"/>
+   </observations>
+   <terminate>
+     <observations>
+       <observation id="5" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="p.name" states="released" process="onchange"/>
+     </observations>
+     <actions>
+     </actions>
+   </terminate>
+    <actions>
+      <bind id="33" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="x" interactor_out="Interactor.CIO" name_out="c.name" attr_out="x"/>
+      <bind id="44" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="y" interactor_out="Interactor.CIO" name_out="c.name" attr_out="y"/>
+    </actions>
+  </operator>
+
+</mapping>

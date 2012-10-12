@@ -1,0 +1,38 @@
+<mapping name="Pinch Mapping" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+  <operator id = "1" type="complementary">
+    <observations>
+      <observation id="2" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="f1" states="touched" process="continuous">
+      </observation>
+      <observation id="4" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2" states="touched" process="continuous">
+        <conditions>
+          <backend id="10" call="find_cio_from_coordinates" class="CUIControl" result="cio1" parameter="f1.x,f1.y"/>
+          <backend id="11" call="find_cio_from_coordinates" class="CUIControl" result="cio2" parameter="f2.x,f2.y"/>
+          <equals left="cio1.name" right="cio2.name"/>
+          <equals not="true" left="f1.name" right="f2.name"/>
+          <or>
+            <equals left="f3.name" right="f1.name"/>
+            <equals left="f3.name" right="f2.name"/>
+          </or>
+        </conditions>
+      </observation>
+    </observations>
+    <terminate>
+      <observations>
+        <observation id="5" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="p.name" states="released" process="onchange"/>
+      </observations>
+      <actions>
+      </actions>
+    </terminate>
+    <actions>
+      <!--event id="66" type="drag" target="aio"></event-->
+      <bind id="33" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="x" interactor_out="Interactor.CIO" name_out="c.name" attr_out="x"/>
+      <bind id="44" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="y" interactor_out="Interactor.CIO" name_out="c.name" attr_out="y"/>
+    </actions>
+  </operator>
+
+  <!-- mesa: 5: 1481 / 3: 1730 2: 2010 1: 2030 0: 1590 -->
+
+
+</mapping>

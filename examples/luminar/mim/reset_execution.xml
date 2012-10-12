@@ -1,0 +1,16 @@
+<mapping name="Reset Execution" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.AIO.AIIN.AIINDiscrete.AIReference.AICommand" states="activated" result="c" process="onchange" />
+      <!--observation id="111" interactor="Interactor.IR.IRMode.Pointer.Mouse" states="stopped" result="p" process="instant"/-->
+      <observation id="111" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" states="stopped" result="p" process="instant"/>
+    </observations>
+    <actions>
+      <backend id="3" call="touch" class="CalibrationApp" parameter="c,p"/>
+    </actions>
+  </operator>
+
+</mapping>
