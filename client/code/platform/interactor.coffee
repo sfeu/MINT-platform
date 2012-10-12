@@ -52,7 +52,6 @@ exports.caroufredselJS = (interactor) ->
 
   #init the carousel
   $("#" + interactor.cio.name).carouFredSel
-    items: interactor.cio["items"]
     circular: (interactor.cio["circular"] is true)
     auto: (interactor.cio["auto"] is true)
     scroll_items: interactor.cio.scroll_items
@@ -63,6 +62,7 @@ exports.caroufredselJS = (interactor) ->
     pagination:
       container: '#pager',
       event: '',
+      items: 1,
       anchorBuilder: (nr, item) ->
             src = item.attr("src").replace(".png", "_thumb.png")
             "<img src=\"" + src + "\" border=\"0\" />"
