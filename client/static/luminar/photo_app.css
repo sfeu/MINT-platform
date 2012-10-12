@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@font-face {
+    font-family: "aaaiight";
+    src: url("aaaiight.ttf");
+
+}
+#zoom {
+
+}
+
+#zoom2 {
+
+    left:300px;
+
+}
+
+#zoom3 {
+
+    left:600px;
+
+}
+
+.zoomProps{
+
+    position:absolute;
+}
+
+#cic-photo_app {
+    height: 377px;
+    width: 600px;
+    overflow: hidden;
+
+}
+
+.polaroid{
+
+    text-align: center;
+
+    padding: 10px 10px 25px 10px;
+    background: #eee;
+    border: 1px solid #fff;
+    -moz-box-shadow: 0px 2px 15px #333;
+    -webkit-box-shadow:	0px 2px 15px #333;
+    border: 1px solid #dfdfdf;
+    border: 1px solid rgba(96,96,96,0.2);
+    font-family:"aaaiight";
+    font-size:24px;
+    color:#000;
+    padding-bottom:10px;
+    text-shadow:#333;
+}
+
+.upSky{
+    background: #FFFFFF;
+
+}
+
