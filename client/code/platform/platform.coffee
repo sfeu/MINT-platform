@@ -2,6 +2,8 @@
 pointer = require("/ir/pointer.coffee")
 nose = require("/ir/nose.coffee")
 touch = require("/ir/touch.coffee")
+touch2 = require("/ir/touch2.coffee")
+
 multitouch = require("/ir/multitouch.coffee")
 interactorJS = require("/interactor.coffee")
 
@@ -39,6 +41,7 @@ displayMainScreen = ->
   nose.init(ss)
   touch.init(ss)
   multitouch.init(ss)
+  touch2.init(ss)
   ss.rpc 'platform.retrieveActiveInteractors'
  #   interactors.forEach (interactor) ->
  #     displayInteractor(interactor)
@@ -144,9 +147,7 @@ hasUnresolvedDependencies = (interactor) ->
     for dependency in dependencies
       return true if dependencyNotMet(dependency)
   if interactor.aio.parent
-    dependencies = interactor.aio.parent.split("|")
-    for dependency in dependencies
-      return true if dependencyNotMet(dependency)
+    return true if dependencyNotMet(interactor.aio.parent)
   return false
 
 dependencyNotMet = (dependency) ->
@@ -189,7 +190,7 @@ window.commandQueue = {}
 
 ss.event.on 'command', (msg,channel) ->
   data = JSON.parse msg
-  if !!~ data["command"].indexOf "interactor"
+  if (!!~ data["command"].indexOf "interactor") or (!!~ data["command"].indexOf "hide")
     console.log "process command: #{data['command']} for #{data.aio.name}"
     displayInteractor(data)
   else
