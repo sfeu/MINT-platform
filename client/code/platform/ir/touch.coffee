@@ -27,7 +27,7 @@ exports.init = (ss) ->
         touches[allTouches[i].identifier] = allTouches[i]
         new_touches.push(new Touch(allTouches[i]))
       i++
-    ss.rpc "platfotm.newTouch",new_touches if new_touches.length >0
+    ss.rpc "platform.newTouch",new_touches if new_touches.length >0
 
   $(document).bind "touchend",(event) ->
     event.preventDefault()
