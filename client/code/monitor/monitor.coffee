@@ -28,6 +28,23 @@ retrieveInteractors = () ->
         ]
       } )
 
+  ss.rpc 'monitor.retrieveCIOInteractors', (response) ->
+        aDataSet = jQuery.parseJSON response
+        createReferences(aDataSet)
+        table = $('#cio').dataTable( {
+          "aaData": aDataSet,
+          "iDisplayLength": 50,
+          "aoColumns": [
+            { "sTitle": "class" },
+            { "sTitle": "name" },
+            { "sTitle": "x" },
+            { "sTitle": "y", "sClass": "center" },
+            { "sTitle": "width", "sClass": "center"}
+            { "sTitle": "height", "sClass": "center"}
+            { "sTitle": "layer", "sClass": "center"}
+          ]
+        } )
+
 updateInteractor = (data) ->
   row = interactor_ref["#{data['mint_model']}#{data['name']}"]
   table.fnUpdate( data['new_states'].join("|"), row, 4 )

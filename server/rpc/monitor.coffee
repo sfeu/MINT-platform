@@ -59,6 +59,28 @@ exports.actions = (req, res, ss) ->
              res result
        ) id
 
+  retrieveCIOInteractors: () ->
+     list = []
+     R.smembers "mint_interactors:mint_model:name:all", (err,ids) =>
+       count = ids.length
+       for id in ids
+         if !!~ id.indexOf "cui-gfx"
+           ((id_copy) ->
+             R.hmget "mint_interactors:"+id_copy, "classtype","name", "x","y", "width","height","layer", (err,element) =>
+               list.push element
+               count--
+               if count==0
+                 subscribeInteractors(ss)
+                 result = JSON.stringify list
+                 res result
+           ) id
+         else
+           count--
+           if count==0
+             subscribeInteractors(ss)
+             result = JSON.stringify list
+             res result
+
   retrieveMappings: () ->
     if not subscribed_mappings
      TCPClient = require('simpletcp').client()
