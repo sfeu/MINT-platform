@@ -9,20 +9,7 @@ html, #c-carousel {
     background-color: #FFFFFF;
         border:0px;    
     }
-    
-#c-carousel {
-    min-height: 900px;
-    min-width: 1198px;
-}
 
-#wrapper {
-    width: 1240px;
-    height: 900px;
-    margin: -450px 0 0 -640px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-}
 #caroufredsel-sheets {
     margin: 20px 30px 20px;
     overflow: hidden;
@@ -72,4 +59,9 @@ body {
     text-align: center;
     float: left;
      
+}
+
+input.big {
+    -webkit-transform: scale(1.5);
+    font-size: 20px;
 }

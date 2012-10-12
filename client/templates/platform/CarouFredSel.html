@@ -1,10 +1,10 @@
 
 <div id="caroufredsel-{{= cio.name}}">
-<div id="c-carousel">
-    <div id="wrapper">
+<div id="c-carousel" style="min-height: {{= cio.height}}px;min-width: {{= cio.width}}px;">
+    <div id="wrapper" style="width: {{= cio.width}}px;height: {{= cio.height}}px;margin: -{{= (cio.height)/2}}px 0 0 -{{= (cio.width)/2+40}}px;position: absolute;left: 50%;top: 50%;">
         <div id="{{= cio.name}}">
         </div>
-        <div id="pager" >
+        <div id="pager" style="width: 160px;overflow: hidden;position: absolute;z-index: 2;top: 40px;right: 0px;">
 
         </div>
     </div>
