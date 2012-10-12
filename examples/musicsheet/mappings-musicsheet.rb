@@ -15,6 +15,7 @@ EM.run {
   require "MINT-core"
 
   redis = Redis.connect
+  redis.flushdb
 
   DataMapper.setup(:default, { :adapter => "redis", :host =>"0.0.0.0",:port=>6379})
 

@@ -18,7 +18,7 @@ EM.run {
   Fiber.new {
 
     # Clean old
-    AUIControl.suspend_all
+    #AUIControl.suspend_all
 
     # IRM Model Interactors
     ########################
@@ -50,9 +50,9 @@ EM.run {
 
 
     AISingleChoice.create(:name=>"option", :children => "nodding|tilting|turning",:parent => "interactive_sheet")
-    AISingleChoiceElement.create(:name=>"nodding",:label=>"Nodding",:parent => "option")
-    AISingleChoiceElement.create(:name=>"tilting",:label=>"Tilting",:parent => "option")
-    AISingleChoiceElement.create(:name=>"turning",:label=>"Turning",:parent => "option")
+    AISingleChoiceElement.create(:name=>"nodding",:text=>"Nodding",:parent => "option")
+    AISingleChoiceElement.create(:name=>"tilting",:text=>"Tilting",:parent => "option")
+    AISingleChoiceElement.create(:name=>"turning",:text=>"Turning",:parent => "option")
 
     AUIControl.organize(nav_start)
     root.save
@@ -60,25 +60,28 @@ EM.run {
     # CIM HTML GfX Model Interactors
     ###################################
 
+    HEIGHT=700
+    WIDTH=1280
+
     HTMLHead.create(:name =>"html_header",:css=>"/musicsheet/musicsheet.css",:js=>"/musicsheet/jquery.carouFredSel-5.6.2.js",:states=>[:positioned])
-    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => 1280, :x=>20, :y => 5, :states=>[:positioned], :highlightable =>false)
-    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>1000, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
+    MinimalOutputSlider.create(:name=>"horizontal_level",:height =>8, :width => WIDTH-40, :x=>20, :y => 5, :states=>[:positioned], :highlightable =>false)
+    MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>HEIGHT-20, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
 
-    CIC.create(:name =>"interactive_sheet",:x=>15, :y=>15, :width =>1280, :height => 1000,:layer=>0, :rows=>2, :cols=>1,:states=>[:positioned])
-    CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>0,:width=>1198,:layer=>1,  :height => 840,:states=>[:positioned], :highlightable => true)
-    CarouFredSelImage.create(:name=>"page1",:path=>"/musicsheet/sheets/page1.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page2",:path=>"/musicsheet/sheets/page2.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page3",:path=>"/musicsheet/sheets/page3.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page4",:path=>"/musicsheet/sheets/page4.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page5",:path=>"/musicsheet/sheets/page5.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page6",:path=>"/musicsheet/sheets/page6.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page7",:path=>"/musicsheet/sheets/page7.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
-    CarouFredSelImage.create(:name=>"page8",:path=>"/musicsheet/sheets/page8.png",:x=>15, :y=>15, :width =>1180, :height => 820,:states=>[:positioned])
+    CIC.create(:name =>"interactive_sheet",:x=>15, :y=>15, :width =>WIDTH-60, :height => HEIGHT-30,:layer=>0, :rows=>2, :cols=>1,:states=>[:positioned])
+    CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>0,:width=>WIDTH-80,:layer=>1, :items => (HEIGHT-100/100).to_i ,:height => HEIGHT-80,:states=>[:positioned], :highlightable => true)
+    CarouFredSelImage.create(:name=>"page1",:path=>"/musicsheet/sheets/page1.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page2",:path=>"/musicsheet/sheets/page2.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page3",:path=>"/musicsheet/sheets/page3.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page4",:path=>"/musicsheet/sheets/page4.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page5",:path=>"/musicsheet/sheets/page5.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page6",:path=>"/musicsheet/sheets/page6.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page7",:path=>"/musicsheet/sheets/page7.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
+    CarouFredSelImage.create(:name=>"page8",:path=>"/musicsheet/sheets/page8.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
 
-    RadioButtonGroup.create(:name =>"option", :x=>30,:y=>840, :width=>1200, :height => 100,:rows=>1,:cols=>3,:states=>[:positioned])
-    RadioButton.create(:name => "nodding",:x=>40, :y=>850, :width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
-    RadioButton.create(:name => "tilting",:x=>440, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
-    RadioButton.create(:name => "turning",:x=>840, :y=>850,:width=>200, :height => 80,:states=>[:positioned],:depends => "option", :highlightable => true)
+    RadioButtonGroup.create(:name =>"option", :x=>30,:y=>HEIGHT-100, :width=>WIDTH, :height => 30,:rows=>1,:cols=>3,:states=>[:positioned])
+    RadioButton.create(:name => "nodding",:x=>20, :y=>HEIGHT-90, :width=>(WIDTH-100)/3, :height => 66,:states=>[:positioned],:depends => "option", :highlightable => true)
+    RadioButton.create(:name => "tilting",:x=>WIDTH/3, :y=>HEIGHT-90,:width=>(WIDTH-100)/3, :height => 66,:states=>[:positioned],:depends => "option", :highlightable => true)
+    RadioButton.create(:name => "turning",:x=>WIDTH/3*2, :y=>HEIGHT-90,:width=>(WIDTH-100)/3, :height => 66,:states=>[:positioned],:depends => "option", :highlightable => true)
 
     # Connect IRMs and present app
     ###################################
