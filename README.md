@@ -33,9 +33,7 @@ There is still no documentation for the framework, but a lot of articles about t
 #### Limitations
 
 * No multi-user support or authentication, if another user connects to an application the presentation of the first user is mirrored to the second one.
-* The framework only runs on Ubuntu and installation has only be tested for version 10.04 LTS
-* We require ruby 1.8, the application threading model inside one agent is currently limited, but critical parts can be distributed to several agents instead.
-* we currenlty only support rails 2.3, because we rely on the execute action plugin that has no been ported to rails 3 so far. 
+* The framework only runs on Ubuntu and installation has only be tested for version 12.04 LTS
 * We currently have only implemented a very limited set of concrete interactors with HTML/jQuery for the web based
 
 ### Changes to the initial MINT 2010 version
@@ -112,6 +110,9 @@ include into file .gemrc in home folder
  sudo gem install bundler
  cd MINT-platform
  sudo bundle install
+ sudo npm link socketstream
+ sudo npm link redis
+ sudo npm link simpletcp
 
 * start redis-server in separate terminal (if not already started)
 
