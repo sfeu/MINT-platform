@@ -1,4 +1,6 @@
 source :rubygems
+gem "oj"
+gem "multi_json"
 gem "MINT-statemachine", :path => "../statemachine" # "~> 1.2.3"
 gem "MINT-scxml", :path => "../scxml" # "~> 1.0.0"
 gem "MINT-core", :path => '../MINT-core' # "1.0.0"
