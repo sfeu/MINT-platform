@@ -30,9 +30,9 @@ EM.run {
   m.load("./mim/mim_streaming_example.xml")
 
   # Start server to connect mapping tool
-  MappingServer.new.start(m)
-
+  #MappingServer.new.start(m)
+  SCXMLClient.new("Interactor.*",nil).start
   # start position updater to know about widgets positions in browser
-  PositionUpdater.new.start
+  #PositionUpdater.new.start
 }
 
