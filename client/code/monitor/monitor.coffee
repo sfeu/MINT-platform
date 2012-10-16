@@ -1,22 +1,23 @@
 # Client-side Code
 
 interactor_ref = {}
-table = null
+state_table = null
+cio_table = null
 mapping_table = null
 mapping_ref ={}
 mapping_counter = 0
 
-createReferences = (data) ->
+createReferences = (data,tab) ->
   row = 0
   for interactor in data
-    interactor_ref["#{interactor[5]}#{interactor[1]}"]=row
+    interactor_ref["#{interactor[5]}#{interactor[1]}"]=[row,tab]
     row++
 
 retrieveInteractors = () ->
   ss.rpc 'monitor.retrieveInteractors', (response) ->
       aDataSet = jQuery.parseJSON response
-      createReferences(aDataSet)
-      table = $('#example').dataTable( {
+      createReferences(aDataSet,"state")
+      state_table = $('#example').dataTable( {
         "aaData": aDataSet,
         "iDisplayLength": 50,
         "aoColumns": [
@@ -30,8 +31,8 @@ retrieveInteractors = () ->
 
   ss.rpc 'monitor.retrieveCIOInteractors', (response) ->
         aDataSet = jQuery.parseJSON response
-        createReferences(aDataSet)
-        table = $('#cio').dataTable( {
+        createReferences(aDataSet,"cio")
+        cio_table = $('#cio').dataTable( {
           "aaData": aDataSet,
           "iDisplayLength": 50,
           "aoColumns": [
@@ -46,11 +47,14 @@ retrieveInteractors = () ->
         } )
 
 updateInteractor = (data) ->
-  row = interactor_ref["#{data['mint_model']}#{data['name']}"]
-  table.fnUpdate( data['new_states'].join("|"), row, 4 )
-  table.fnUpdate( data['abstract_states'], row, 3 )
-  table.fnUpdate( data['states'].join("|"), row, 2 )
-  $(table.fnGetNodes(row)).effect( 'highlight', null, 1000);
+  [row,tab] = interactor_ref["#{data['mint_model']}#{data['name']}"]
+  if (!!~ tab.indexOf("state"))
+    state_table.fnUpdate( data['new_states'].join("|"), row, 4 )
+    state_table.fnUpdate( data['abstract_states'], row, 3 )
+    state_table.fnUpdate( data['states'].join("|"), row, 2 )
+    $(state_table.fnGetNodes(row)).effect( 'highlight', null, 500);
+  #else if  (!!~ tab.indexOf("cio"))
+
   #console.log ("update row #{row} with newstates #{data['new_states'].join("|")} requested")
 
 # This method is called automatically when the websocket connection is established. Do not rename/delete
