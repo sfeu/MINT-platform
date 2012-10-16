@@ -48,16 +48,16 @@ EM.run {
 
     # CIM HTML GfX Model Interactors
     ###################################
-    HTMLHead.create(:name =>"html_header",:css=>"",:js=>"",:states=>[:positioned])
+    HTMLHead.create(:name =>"html_header",:css=>"/streaming_example/streaming_example.css",:js=>"",:states=>[:positioned])
 
     CIC.create(:name =>"streaming_example",:x=>15, :y=>15, :width =>580, :height => 300,:layer=>0, :rows=>3, :cols=>1,:states=>[:positioned])
     Button.create(:name=>"reset",:height =>60, :width => 200, :x=>200, :y => 230, :states=>[:positioned], :highlightable =>true)
 
-    ProgressBar.create(:name=>"volume",:height =>80, :width => 500, :x=>40, :y => 120, :states=>[:positioned], :highlightable =>true)
-    Label.create(:name=>"volume_ref",:highlightable =>false,:states=>[:positioned],:depends => "volume")
+    ProgressBar.create(:name=>"volume",:height =>80, :width => 500, :x=>40, :y => 130, :states=>[:positioned], :highlightable =>true)
+    Label.create(:name=>"volume_ref",:highlightable =>false,:height =>80, :width => 500, :x=>40, :y => 90,:states=>[:positioned],:depends => "volume")
 
-    Slider.create(:name=>"slider",:height =>60, :width => 500, :x=>40, :y => 20, :states=>[:positioned], :highlightable =>true)
-    Label.create(:name=>"slider_ref",:highlightable =>false,:states=>[:positioned],:depends => "slider")
+    Slider.create(:name=>"slider",:height =>60, :width => 500, :x=>40, :y => 50, :states=>[:positioned], :highlightable =>true)
+    Label.create(:name=>"slider_ref",:highlightable =>false,:height =>80, :width => 500, :x=>40, :y => 10,:states=>[:positioned],:depends => "slider")
 
     # Connect IRMs and present app
     ###################################
