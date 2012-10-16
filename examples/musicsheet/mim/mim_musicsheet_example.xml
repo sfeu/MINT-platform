@@ -3,8 +3,31 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
 
- <!--include href="left_button_aisinglepresence_next.xml" start="true"/>
-  <include href="right_button_aisinglepresence_prev.xml" start="true"/-->
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cio_hidden_refresh.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cio_displaying_refresh.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_stop_to_cio_highlight.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_present_to_cio_display.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_suspend_to_cio_hide.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/left_button_aisinglepresence_enter.xml" start="true"/>
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aisinglepresence_present_to_child_present.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aisinglepresence_children_finished_to_caroufredsel_init_js.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aisinglechoice_present_to_child_present.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aisinglechoiceelement_unchosen_to_radiobutton_unselect.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aisinglechoiceelement_chosen_to_radiobutton_select.xml" start="true" />
+  <<include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_press_to_aisinglechoiceelement_choose.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/head_tilting_right_to_aisinglepresence_next.xml" start="true"/>
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/head_tilting_left_to_aisinglepresence_prev.xml" start="true"/>
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/head_looking_right_to_aisinglepresence_next.xml" start="true"/>
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/head_looking_left_to_aisinglepresence_prev.xml" start="true"/>
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/head_nodding_to_aisinglepresence_next.xml" start="true"/>
+
+  <!-- browser refresh handling -->
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/caroufredsel_refreshing_to_caroufredsel_init_js.xml" start="true"/>
+
   <include href="aisinglechoiceelement_choose_to_head_mode.xml" start="true"/>
   <include href="bind_head_tilting_to_horizontal_level.xml" start="true"/>
 

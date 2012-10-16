@@ -33,13 +33,13 @@ EM.run {
 
   m = MappingManager.new
   m.load("../../../MINT-core/lib/MINT-core/model/mim/mim_default.xml")
-  m.load("./mim/mim_musicsheet_example.xml")
+  #m.load("./mim/mim_musicsheet_example.xml")
 
   # Start server to connect mapping tool
   MappingServer.new.start(m)
 
   # start position updater to know about widgets positions in browser
-  PositionUpdater.new().start
+  #PositionUpdater.new().start
 
 
   SCXMLClient.new("Interactor.head","head").start

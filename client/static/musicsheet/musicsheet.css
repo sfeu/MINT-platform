@@ -10,13 +10,6 @@ html, #c-carousel {
         border:0px;    
     }
 
-#caroufredsel-sheets {
-    margin: 20px 30px 20px;
-    overflow: hidden;
-    position: absolute;
-    border:0px;
-    
-}
 #carousel img {
     display: block;
 }
