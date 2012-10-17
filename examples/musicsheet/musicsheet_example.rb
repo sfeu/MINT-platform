@@ -28,7 +28,7 @@ EM.run {
   MusicSheet.head=h
   CUIControl.fill_active_cio_cache
 
-  SCXMLClient.new("Interactor.IR.IRMode.Body.Head","head").start
+  SCXMLClient.new("Interactor.IR.IRMode.Body.Head","head").start("10.10.0.2")
 
   m = MappingManager.new
   m.started do
@@ -82,7 +82,7 @@ EM.run {
       MinimalVerticalOutputSlider.create(:name=>"vertical_level",:height =>HEIGHT-20, :width => 8, :x=>10, :y => 20, :states=>[:positioned], :highlightable =>false)
 
       CIC.create(:name =>"interactive_sheet",:x=>15, :y=>15, :width =>WIDTH-60, :height => HEIGHT-30,:layer=>0, :rows=>2, :cols=>1,:states=>[:positioned])
-      CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>0,:width=>WIDTH-80,:layer=>1, :items => (HEIGHT-100/100).to_i ,:height => HEIGHT-120,:states=>[:positioned], :highlightable => true)
+      CarouFredSel.create( :name => "sheets", :depends => "html_header", :x=>0, :y=>10,:width=>WIDTH-80,:layer=>1, :items => (HEIGHT-100/100).to_i ,:height => HEIGHT-120,:states=>[:positioned], :highlightable => true)
       CarouFredSelImage.create(:name=>"page1",:path=>"/musicsheet/sheets/page1.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
       CarouFredSelImage.create(:name=>"page2",:path=>"/musicsheet/sheets/page2.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
       CarouFredSelImage.create(:name=>"page3",:path=>"/musicsheet/sheets/page3.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
@@ -92,10 +92,10 @@ EM.run {
       CarouFredSelImage.create(:name=>"page7",:path=>"/musicsheet/sheets/page7.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
       CarouFredSelImage.create(:name=>"page8",:path=>"/musicsheet/sheets/page8.png",:x=>15, :y=>15, :width =>WIDTH-200, :height => HEIGHT-100,:states=>[:positioned])
 
-      RadioButtonGroup.create(:name =>"option", :x=>30,:y=>HEIGHT-100, :width=>WIDTH, :height => 80,:layer=>0,:rows=>1,:cols=>3,:states=>[:positioned])
-      RadioButton.create(:name => "nodding",:x=>20, :y=>HEIGHT-100, :width=>(WIDTH-100)/3, :height => 46,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
-      RadioButton.create(:name => "tilting",:x=>WIDTH/3, :y=>HEIGHT-100,:width=>(WIDTH-100)/3, :height => 46,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
-      RadioButton.create(:name => "turning",:x=>WIDTH/3*2, :y=>HEIGHT-100,:width=>(WIDTH-100)/3, :height => 46,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
+      RadioButtonGroup.create(:name =>"option", :x=>30,:y=>HEIGHT-90, :width=>WIDTH, :height => 80,:layer=>0,:rows=>1,:cols=>3,:states=>[:positioned])
+      RadioButton.create(:name => "nodding",:x=>20, :y=>HEIGHT-90, :width=>(WIDTH-100)/3, :height => 36,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
+      RadioButton.create(:name => "tilting",:x=>WIDTH/3, :y=>HEIGHT-90,:width=>(WIDTH-100)/3, :height => 36,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
+      RadioButton.create(:name => "turning",:x=>WIDTH/3*2, :y=>HEIGHT-90,:width=>(WIDTH-100)/3, :height => 36,:layer=>1,:states=>[:positioned],:depends => "option", :highlightable => true)
 
       # Connect IRMs and present app
       ###################################
