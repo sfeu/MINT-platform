@@ -28,7 +28,7 @@ EM.run {
   MusicSheet.head=h
   CUIControl.fill_active_cio_cache
 
-  SCXMLClient.new("Interactor.IR.IRMode.Body.Head","head").start("10.10.0.2")
+  SCXMLClient.new("Interactor.IR.IRMode.Body.Head","head").start #("10.10.0.2")
 
   m = MappingManager.new
   m.started do

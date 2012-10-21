@@ -24,7 +24,7 @@ EM.run {
 
   # Start server to connect mapping tool
   #MappingServer.new.start(m)
-  SCXMLClient.new("Interactor.AIO.AIIN.AIINContinuous*",nil).start
+  SCXMLClient.new("Interactor.AIO.AIOUT.AIOUTContinuous*",nil).start
 
   m = MappingManager.new
   m.started do

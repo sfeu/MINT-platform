@@ -6,8 +6,7 @@
   <include href="slider_volume.xml" start="true"/>
   <include href="reset_execution.xml" start="true"/>
 
-  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cio_hidden_refresh.xml" start="true" />
-  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cio_displaying_refresh.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cuicontrol_refresh_all.xml" start="true" />
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_stop_to_cio_highlight.xml" start="true" />
 
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
