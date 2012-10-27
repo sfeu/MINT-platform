@@ -14,12 +14,12 @@ html, #c-carousel {
     display: block;
 }
 #pager {
-    width: 140px;
-    overflow: hidden;
-    position: absolute;
-    z-index: 2;
-    bottom: 100px;
-    right: 0;
+    #width: 140px;
+    #overflow: hidden;
+    #position: absolute;
+    #z-index: 2;
+    bottom: 50px;
+    #right: 0;
 }
 #pager img {
     display: block;
@@ -45,13 +45,8 @@ body {
     }
 
 #radiobuttongroup-option div {
-    width: 25%;
-    height: 40px;
-    margin: 20px 20px 20px;
-    padding-top: 20px;
     text-align: center;
-    float: left;
-     
+
 }
 
 input.big {

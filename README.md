@@ -82,6 +82,14 @@ include into file .gemrc in home folder
  sudo aptitude update
  sudo apt-get install nodejs npm
 
+* install native library dependencies that some gems like eventmachine, SDL or Magick or our framework requires and a working C compiler to compile them
+
+ sudo apt-get install build-essential curl libsdl-dev libsdl-mixer1.2-dev libmagickcore-dev
+ sudo apt-get install libssl-dev libfreetype6-dev gsfonts libjpeg62-dev
+           libmagickwand-dev ???
+
+* checkout statemachine, scxml, em-hiredis, dm-redis-adapter, MINT-core, MINT-platform
+
 * Install socketstream version 0.3 and dependencies using npm
 
  sudo npm install -g git://github.com/socketstream/socketstream.git
@@ -92,22 +100,16 @@ include into file .gemrc in home folder
  sudo aptitude update
  sudo apt-get install libcassowary0
 
-* install native library dependencies that some gems like eventmachine, SDL or Magick or our framework requires and a working C compiler to compile them
-
- sudo apt-get install build-essential curl libsdl-dev libsdl-mixer1.2-dev libmagickcore-dev libmagickwand-dev libssl-dev libfreetype6-dev gsfonts libjpeg62-dev
-
-* checkout statemachine, scxml, em-hiredis, dm-redis-adapter, MINT-core, MINT-platform
 
  git clone ssh://git@multi-access.de/statemachine
  git clone ssh://git@multi-access.de/scxml
  git clone -b experimental git://github.com/mloughran/em-hiredis.git
- git clone -b test_natural_keys ssh://git@multi-access.de/dm-redis-adapter
+ git clone -b optimized_inhertitance_queries ssh://git@multi-access.de/dm-redis-adapter
  git clone ssh://git@multi-access.de/MINT-core
  git clone ssh://git@multi-access.de/MINT-platform
 
 * install all the required dependencies of MINT-platform
 
- sudo gem install bundler
  cd MINT-platform
  sudo bundle install
  sudo npm link socketstream
@@ -144,7 +146,7 @@ http://localhost:3000
 
 * Check if the sound is working ( see http://github.com/sfeu/MINT-sdl for source code ) - a clicking sound should be played while pointing to the different cells.
 
-* Buy colored gloves and try our gesture recognition app ( will be releasen soon ) to navigate through the cells using hand postures.
+* Buy colored gloves and try our gesture recognition app ( will be released soon ) to navigate through the cells using hand postures.
 
 * Browse the source code, read (and cite) our papers to get a basic understanding of the framework components.
 
