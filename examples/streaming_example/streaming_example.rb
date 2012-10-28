@@ -23,10 +23,10 @@ EM.run {
 
 
   # Start server to connect mapping tool
-  #MappingServer.new.start(m)
   SCXMLClient.new("Interactor.AIO.AIOUT.AIOUTContinuous*",nil).start
 
   m = MappingManager.new
+  MappingServer.new.start(m)
   m.started do
     Fiber.new {
       # Clean old
