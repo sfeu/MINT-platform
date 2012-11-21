@@ -18,6 +18,8 @@ The MINT core gem contains all basic AUI and CUI models as well as the basic inf
 
 There is still no further documentation for the framework, but a lot of research articles about the concepts and theories of our approach have already been published and can be accessed from our project site http://www.multi-access.de .
 
+An overview about the overall architecture and components can be found here: http://www.multi-access.de/mint-2012-framework/
+
 #### Quick Facts
 
 * Interactor-based modeling (Widgets) of interface elements by using state machines (see http://github.com/sfeu/MINT-statemachine ) that are designed using SCXML (http://w3c.org/scxml) and created on the fly at runtime (http://github.com/sfeu/scxml)
@@ -163,7 +165,7 @@ http://localhost:3000
 
 * You have further ideas? Email us and help us improving the framework.
 
-== LICENSE:
+### LICENSE:
 
 The MINT framework is  developed by Sebastian Feuerstack Copyright (C) 2010-2012 Sebastian Feuerstack
 
