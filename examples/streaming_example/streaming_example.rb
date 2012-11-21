@@ -20,8 +20,6 @@ EM.run {
   DataMapper.finalize
   CUIControl.fill_active_cio_cache
 
-
-
   # Start server to connect mapping tool
   SCXMLClient.new("Interactor.AIO.AIOUT.AIOUTContinuous*",nil).start
 
