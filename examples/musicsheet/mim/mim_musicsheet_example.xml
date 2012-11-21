@@ -8,6 +8,8 @@
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_present_to_cio_display.xml" start="true" />
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_suspend_to_cio_hide.xml" start="true" />
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/left_button_aisinglepresence_enter.xml" start="true"/>
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
+   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
 
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
