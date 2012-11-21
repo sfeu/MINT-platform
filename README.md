@@ -29,6 +29,10 @@ An overview about the overall architecture and components can be found here: htt
 * The platform comes with a set of abstract (modality independent) interactors (see specification here: http://www.multi-access.de/mint/aim/ )
 * A monitor frontend to observe the state of all interactors and mappings during runtime
 * Automatic synchronisation of an arbitrary set of connected web browsers
+* Detailed model specification including SCXML-based behavior specification for all interactors
+** MINT Abstract Interactor Model http://www.multi-access.de/mint/aim/2012/20120821/
+** MINT Mapping Model http://www.multi-access.de/mint/mim/2012/20120827/
+** MINT Interaction Resource Model http://www.multi-access.de/mint/irm/2012/20120822/
 * Basic constraint-driven automated layouting on the server side that calculates pixel-exact coordinates for all interface elements based on the Cassowary constraint solver (see http://github.com/sfeu/cassowary )
 * Sound support
 
