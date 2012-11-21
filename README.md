@@ -99,12 +99,7 @@ include into file .gemrc in home folder
  sudo aptitude update
  sudo apt-get install libcassowary0
 
- git clone ssh://git@multi-access.de/statemachine
- git clone ssh://git@multi-access.de/scxml
- git clone -b experimental git://github.com/mloughran/em-hiredis.git
- git clone -b optimized_inhertitance_queries ssh://git@multi-access.de/dm-redis-adapter
- git clone ssh://git@multi-access.de/MINT-core
- git clone ssh://git@multi-access.de/MINT-platform
+ git clone https://github.com/sfeu/MINT-platform.git
 
 * install all the required dependencies of MINT-platform
 
