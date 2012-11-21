@@ -64,7 +64,7 @@ EM.run {
       Button.create(:name=>"4",:height =>239, :width => 319, :x=>320, :y => 240, :states=>[:positioned], :highlightable =>true)
 
       # Second Screen: Photo Application
-
+      ###################################
       photo_app = AIContainer.create(:name=>"photo_app", :states=>[:organized], :children => "joao|thais|arthur")
 
       AIOUT.create(:name =>"joao",:parent => "photo_app",:states=>[:organized])
@@ -83,10 +83,10 @@ EM.run {
       mouse.process_event :connect
 
       header.process_event :present
-      app.process_event :present
-      #photo_app.process_event :present
+      #app.process_event :present
+      photo_app.process_event :present
     }.resume nil
   end
-  m.load("./mim/mim_streaming_example.xml")
+  m.load("./mim/mim_luminar_example.xml")
 }
 

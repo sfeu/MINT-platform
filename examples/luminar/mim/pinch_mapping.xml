@@ -23,12 +23,14 @@
         <observation id="5" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="p.name" states="released" process="onchange"/>
       </observations>
       <actions>
-      </actions>
+     </actions>
     </terminate>
     <actions>
-      <!--event id="66" type="drag" target="aio"></event-->
-      <bind id="33" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="x" interactor_out="Interactor.CIO" name_out="c.name" attr_out="x"/>
-      <bind id="44" interactor_in="Interactor.IR.IRMode.Body.Hand.Fingertip" name_in="p.name" attr_in="y" interactor_out="Interactor.CIO" name_out="c.name" attr_out="y"/>
+      <bindings>
+        <backend id="10" call="calculate_distance" class="CUIControl" result="dist" parameter="f1,f2"/>
+        <attribute id="33"  name_in="dist" interactor_out="Interactor.CIO" name_out="cio1" attr_out="cio1.height" transformation="distance_to_size" class="CUIControl"/>
+        <attribute id="33"  name_in="dist" interactor_out="Interactor.CIO" name_out="cio1" attr_out="cio1.width" transformation="distance_to_size" class="CUIControl"/>
+      </bindings>
     </actions>
   </operator>
 
