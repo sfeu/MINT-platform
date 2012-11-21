@@ -25,6 +25,7 @@ EM.run {
   DataMapper.finalize
 
   h = Head.create(:name => 'head')
+  h.start #("0.0.0.0", 3004)
   MusicSheet.head=h
 
   SCXMLClient.new("Interactor.IR.IRMode.Body.Head*","head").start #("10.10.0.2")
