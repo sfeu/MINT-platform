@@ -150,7 +150,7 @@ http://localhost:3000
     cd examples/musicsheet
     bundle exec ruby musicsheet_example.rb
 
-  * start the Head-Tracking app on windows
+  * start the Head-Tracking app on windows (http://www.multi-access.de/assets/61/HeadController_V3.zip)
 
     Controller.exe
 
