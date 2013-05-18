@@ -1,4 +1,6 @@
-<link id="htmlhead-{{= cio.name}}" href="{{= cio.css}}" media="screen" rel="stylesheet" type="text/css" title="dynamicLoadedSheet" />
+{{each(i,c) cio.css.split("|")}}
+<link id="htmlhead-{{= cio.name}}" href="{{= c}}" media="screen" rel="stylesheet" type="text/css" title="dynamicLoadedSheet" />
+{{/each}}
 <script type="text/javascript" language="javascript" src="{{= cio.js}}"></script>
 
 <script type="text/javascript">

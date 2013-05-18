@@ -71,3 +71,22 @@ exports.caroufredselimageJS = (interactor) ->
   console.log("#{interactor.aio.parent} switch to #{interactor.aio.name}")
   $('#'+interactor.aio.parent).trigger("slideTo","#caroufredselimage-"+interactor.aio.name);
 
+exports.webcamJS = (interactor) ->
+  console.log("webcam JS"+interactor.cio.name)
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+  navigator.getUserMedia
+    video: true
+    audio: true
+  , ((localMediaStream) ->
+    video = document.querySelector('#'+ interactor.cio.name+"-webcam")
+    console.log video
+    video.src = window.URL.createObjectURL(localMediaStream)
+    video.onloadedmetadata = (e) ->
+# Ready to go. Do some stuff.
+      console.log "ready"
+  ), (e) ->
+    console.log "Reeeejected!", e
+
+
+

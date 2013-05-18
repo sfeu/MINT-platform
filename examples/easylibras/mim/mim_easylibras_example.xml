@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<mim name="EasyLibras Example" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/browserscreen_reload_to_cuicontrol_refresh_all.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_stop_to_cio_highlight.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_present_to_cio_display.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/aio_suspend_to_cio_hide.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
+   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
+
+  <!-- browser refresh handling -->
+  <!--include href="../../../../MINT-core/lib/MINT-core/model/mim/caroufredsel_refreshing_to_caroufredsel_init_js.xml" start="true"/-->
+
+
+</mim>
+
+

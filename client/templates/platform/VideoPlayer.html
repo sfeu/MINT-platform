@@ -1,0 +1,8 @@
+
+<div id="videoplayer-{{= cio.name}}" style="position:fixed;left:{{= cio.x}}px;top:{{= cio.y}}px;" class=' {{= cio.states}}'>
+    <video id="{{= cio.name}}-video" class="video-js vjs-default-skin"
+           controls preload="auto" width="{{= cio.width}}" height="{{= cio.height}}"
+           poster="{{= cio.poster_url}}">
+        <source src="{{= cio.video_url}}" type='{{= cio.video_type}}' />
+    </video>
+</div>
