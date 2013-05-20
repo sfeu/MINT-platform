@@ -43,7 +43,7 @@ EM.run {
       libras_video = AIO.create(:name => "libras_video",:states=>[:organized])
       user_video = AIO.create(:name => "user_video",:states=>[:organized])
 
-      progress = AIOUTContinuous.create(:name=>"progress", :data =>0, :states=>[:organized])
+      progress = AIOUTContinuous.create(:name=>"progress", :data =>50, :states=>[:organized])
       start = AICommand.create(:name=>"start", :text =>"Start", :states=>[:organized])
 
       logo = AIOUT.create(:name=>"logo", :states=>[:organized])
@@ -59,8 +59,8 @@ EM.run {
       WIDTH=1280
 
       HTMLHead.create(:name =>"html_header",
-                      :css=>["http://vjs.zencdn.net/4.0/video-js.css","/easylibras_example/application.css"],
-                      :js=>["http://vjs.zencdn.net/4.0/video.js"],:states=>[:positioned])
+                      :css=>"http://vjs.zencdn.net/4.0/video-js.css|/easylibras_example/application.css",
+                      :states=>[:positioned])
 
       VideoPlayer.create(:name => 'libras_video',
                          :video_url => '/easylibras_example/A.mp4',
@@ -69,7 +69,7 @@ EM.run {
                          :x=>0,
                          :y=>120,
                          :width => 640,
-                         :height => 480, :states=>[:positioned])
+                         :height => 480, :states=>[:positioned], :depends => "html_header")
 
       WebCam.create(:name => "user_video",
                     :x=> 641,:y=>120,

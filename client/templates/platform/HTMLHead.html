@@ -1,25 +1,6 @@
+<div id="htmlhead-{{= cio.name}}">
 {{each(i,c) cio.css.split("|")}}
-<link id="htmlhead-{{= cio.name}}" href="{{= c}}" media="screen" rel="stylesheet" type="text/css" title="dynamicLoadedSheet" />
+    <link href="{{= c}}" media="screen" rel="stylesheet" type="text/css" title="dynamicLoadedSheet" />
 {{/each}}
-<script type="text/javascript" language="javascript" src="{{= cio.js}}"></script>
 
-<script type="text/javascript">
-
-    (function(){
-// Store a reference to the original remove method.
-        var originalHideMethod = jQuery.fn.hide;
-
-// Define overriding method.
-        jQuery.fn.hide = function(){
-// Log the fact that we are calling our override.
-
-            if (this[0]!=null && (this[0].id.indexOf("caroufredselimage")!=-1)) {
-                console.log( "Override method:"+this[0].id );
-                return this
-// Execute the original method.
-            } else {
-                return originalHideMethod.apply( this, arguments );
-            }
-        }
-    })();
-</script>
+</div>

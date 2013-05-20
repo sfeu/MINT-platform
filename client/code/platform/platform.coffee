@@ -46,9 +46,12 @@ displayMainScreen = ->
  #   interactors.forEach (interactor) ->
  #     displayInteractor(interactor)
 
-getIdentifier = (interactor) ->
+getType = (interactor) ->
   types = interactor.cio.classtype.split("::")
-  i_type = types[types.length - 1]
+  types[types.length - 1]
+
+getIdentifier = (interactor) ->
+  i_type = getType(interactor)
   "#"+i_type.toLowerCase() + "-" + interactor.cio.name
 
 getInputIdentifier = (interactor) ->
@@ -81,47 +84,60 @@ unselectInteractor = (interactor) ->
   identifier = getInputIdentifier(interactor)
   $(identifier).attr('checked',false)
 
+loadJS = (interactor,cb) ->
+  if interactor.cio.js
+    ss.load.code "/platform/interactor/"+getType(interactor).toLowerCase(), ->
+      #for js in interactor.cio.js
+      console.log("require "+interactor.cio.js)
+      require("/"+interactor.cio.js)
+      cb()
+  else
+    cb()
+
 displayInteractor = (interactor) ->
   console.log interactor
   if hasUnresolvedDependencies(interactor)
     window.unresolvedDepsInteractors.push interactor
     return
 
-  identifier = getIdentifier(interactor)
+  # load any interactor specific JS library
+  loadJS interactor,() =>
 
-  if ($(identifier).length > 0)  # check if the interactor is just hidden
-    $(identifier).show()
-  else
-    types = interactor.cio.classtype.split("::")
-    i_type = types[types.length - 1]
-    fim = $('#tmpl-platform-'+i_type).tmpl(interactor)
+    identifier = getIdentifier(interactor)
 
-    elem = null
-    if ("hidden" in interactor.cio.states.split('|')) or "hidden" in interactor.cio.abstract_states.split('|')
-      fim.hide()
-
-    if (interactor.aio.parent)
-      parent = getDisplayedInteractor(interactor.aio.parent)
-      parent = getIdentifier(parent)
-      fim.appendTo(parent)
+    if ($(identifier).length > 0)  # check if the interactor is just hidden
+      $(identifier).show()
     else
-      fim.appendTo('#main')
-    fim.addClass("displayed")
+      types = interactor.cio.classtype.split("::")
+      i_type = types[types.length - 1]
+      fim = $('#tmpl-platform-'+i_type).tmpl(interactor)
 
-    elem = $(identifier)
-    if elem.length >0
-      console.log("sizes #{elem.offset().left}/#{elem.offset().top} - #{elem.outerWidth()}/#{elem.outerHeight()}")
-      ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,elem,elem.outerWidth(),elem.outerHeight()))
+      elem = null
+      if ("hidden" in interactor.cio.states.split('|')) or "hidden" in interactor.cio.abstract_states.split('|')
+        fim.hide()
 
-    window.displayedInteractors[interactor.cio.name] = interactor
+      if (interactor.aio.parent)
+        parent = getDisplayedInteractor(interactor.aio.parent)
+        parent = getIdentifier(parent)
+        fim.appendTo(parent)
+      else
+        fim.appendTo('#main')
+      fim.addClass("displayed")
 
-    proccessCommandsFromQueue(interactor.aio.name)
+      elem = $(identifier)
+      if elem.length >0
+        console.log("sizes #{elem.offset().left}/#{elem.offset().top} - #{elem.outerWidth()}/#{elem.outerHeight()}")
+        ss.rpc 'platform.updateInteractorSize',(new InteractorSize(interactor.aio.name,elem,elem.outerWidth(),elem.outerHeight()))
 
-    for interactor in window.unresolvedDepsInteractors
-          if not hasUnresolvedDependencies(interactor)
-            window.unresolvedDepsInteractors.remove interactor
-            displayInteractor interactor
-            break
+      window.displayedInteractors[interactor.cio.name] = interactor
+
+      proccessCommandsFromQueue(interactor.aio.name)
+
+      for interactor in window.unresolvedDepsInteractors
+            if not hasUnresolvedDependencies(interactor)
+              window.unresolvedDepsInteractors.remove interactor
+              displayInteractor interactor
+              break
 
 initJSInteractor = (interactor) ->
   types = interactor.cio.classtype.split("::")

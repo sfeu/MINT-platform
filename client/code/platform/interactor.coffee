@@ -1,5 +1,5 @@
 exports.htmlheadJS = (interactor) ->
-  $("#htmlhead-"+interactor.cio.name).appendTo("#mint-header")
+  $("#htmlhead-"+interactor.cio.name+">link").appendTo("#mint-header")
 
 exports.labelJS = (interactor) ->
   $("#label-"+interactor.cio.name).prependTo("#"+interactor.aio.refers)
@@ -12,7 +12,7 @@ exports.sliderJS = (interactor) ->
       ss.rpc "platform.stopSlider",(interactor.cio.name)
 
 exports.progressbarJS = (interactor) ->
-  $("#progressbar-"+interactor.cio.name).progressbar({ value: interactor.aio.data });
+  $("#progressbar-"+interactor.cio.name).progressbar({ value: interactor.aio.data })
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
       $("#progressbar-volume").progressbar( "option", "value", msg);
 
@@ -87,6 +87,14 @@ exports.webcamJS = (interactor) ->
       console.log "ready"
   ), (e) ->
     console.log "Reeeejected!", e
+
+exports.videoplayerJS = (interactor) ->
+  console.log("videoplayer JS"+interactor.cio.name)
+  videojs(interactor.cio.name+"-video").ready ->
+    console.log("videoplayer playing")
+    myPlayer = this
+    myPlayer.play()
+
 
 
 
