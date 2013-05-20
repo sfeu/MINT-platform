@@ -11,7 +11,7 @@ module MINT
 
   end
 
-  class CarouFredSel < CIC
+  class CarouFredSel < HTMLContainer
 
     property :items,            Integer,  :default => 1
     property :circular,         Boolean,  :default => false
@@ -22,7 +22,7 @@ module MINT
     property :scroll_duration,  Integer,  :default => 200
 
     def getSCXML
-      "#{File.dirname(__FILE__)}/CarouFredSel.scxml"
+      "#{File.dirname(__FILE__)}/caroufredsel.scxml"
     end
 
     #functions called from scxml
@@ -30,7 +30,6 @@ module MINT
     def display_children
       children = MINT::AISinglePresence.get("aui",self.name).children
       @number_of_children =children.length
-
     end
 
     def is_last_child?

@@ -2,8 +2,8 @@
 source :gemcutter
 
 gem "dm-redis-adapter", "~> 0.8.0"
-gem "MINT-statemachine", "~> 1.3.0"
-gem "MINT-scxml",  "~> 1.1.0"
+gem "MINT-statemachine", "~> 1.3.2"
+gem "MINT-scxml",  "~> 1.1.2"
 gem "cassowary", "~> 1.0.1"
 gem "dm-core","~>1.2.0"
 gem "dm-serializer"

@@ -1,7 +1,7 @@
 
 module MINT
 
-  class Button < CIO
+  class Button < HTMLWidget
 
     def getModel
          "cui-gfx"

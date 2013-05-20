@@ -1,6 +1,6 @@
 module MINT
 
-  class RadioButton < CIO
+  class RadioButton < HTMLWidget
     def getSCXML
          "#{File.dirname(__FILE__)}/radiobutton.scxml"
        end
