@@ -57,6 +57,8 @@ require "MINT-core/model/ir/body/fingertip"
 require "MINT-core/model/ir/body/pose"
 require "MINT-core/model/ir/body/OneHandPoseNavigation"
 require "MINT-core/model/ir/body/head"
+require "MINT-core/model/ir/body/StandardModeProtocol"
+require "MINT-core/model/ir/body/libras_recognizer"
 
 
 require "MINT-core/mapping/mapping"

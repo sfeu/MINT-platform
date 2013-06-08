@@ -22,9 +22,9 @@
     <transition event="select" target="selected"><!--   edge-path [selected]  x=40.0 y=130.0  --></transition>
    </state>
   </state>
-  <state id="d"><!--   node-size-and-position x=0.0 y=30.0 w=280.0 h=360.0  -->
-   <state id="displaying" initial="displayed"><!--   node-size-and-position x=10.0 y=30.0 w=270.0 h=170.0  -->
-    <transition event="refresh" target="refreshing"><!--   edge-path [refreshing]  x=100.0 y=230.0  --></transition>
+  <state id="d" initial="init_js"><!--   node-size-and-position x=0.0 y=30.0 w=280.0 h=360.0  -->
+   <state id="displaying" initial="displayed"><!--   node-size-and-position x=0.0 y=80.0 w=270.0 h=170.0  -->
+    <transition event="refresh" target="refreshing"><!--   edge-path [refreshing]  x=90.0 y=280.0  --></transition>
     <state id="displayed"><!--   node-size-and-position x=80.0 y=40.0 w=100.0 h=30.0  -->
      <transition event="highlight" target="highlighted"><!--   edge-path [highlighted]  x=70.0 y=100.0 pointx=0.0 pointy=18.0 offsetx=19.0 offsety=-14.0  --></transition>
     </state>
@@ -44,7 +44,10 @@
 <!--   edge-path [displayed]  x=250.0 y=150.0 x=250.0 y=50.0  --></transition>
     </state>
    </state>
-   <state id="refreshing"><!--   node-size-and-position x=100.0 y=260.0 w=70.0 h=40.0  -->
+   <state id="refreshing"><!--   node-size-and-position x=90.0 y=310.0 w=70.0 h=40.0  -->
+    <transition target="displaying"></transition>
+   </state>
+   <state id="init_js"><!--   node-size-and-position x=110.0 y=30.0 w=80.0 h=30.0  -->
     <transition target="displaying"></transition>
    </state>
   </state>

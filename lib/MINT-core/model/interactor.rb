@@ -12,15 +12,15 @@ module MINT
 
 
     class << self
-        alias get_dm get
+      alias get_dm get
     end
 
     def self.get(*name)
-        if name.length == 1
-          get_dm(getModel,name[0])
-        else
-          get_dm(*name)
-        end
+      if name.length == 1
+        get_dm(getModel,name[0])
+      else
+        get_dm(*name)
+      end
     end
 
     private
@@ -41,6 +41,10 @@ module MINT
 
     #always contains the new atomic states that have been entered by the event that has been processed - especially useful for parallel states
     property :new_states, String
+
+    # contains the channel name of the interactor, which is composed by all merging all parent class names
+    # and used as a communication channel for the interactors to exchange realtime information
+    property :channel, String,  :default => lambda { |r,p| r.class.create_channel_name}
 
     protected
     before :save, :save_statemachine
@@ -66,6 +70,15 @@ module MINT
       "#{attribute}:"+self.class.create_channel_name+".#{self.name}"
     end
 
+    def out_channel_w_name
+      "out_channel:"+ create_channel_w_name
+    end
+
+    def new_states_channel_w_name
+      "new_states:"+ create_channel_w_name
+    end
+
+
     def create_channel_w_name
       self.class.create_channel_name+".#{self.name}"
     end
@@ -88,9 +101,12 @@ module MINT
 
       RedisConnector.redis.publish self.create_channel_w_name, self.to_json(:only => self.class::PUBLISH_ATTRIBUTES)
 
+      publish_new_states abstract_states.join('|'), atomic_states.join('|'), states.join('|')
+
       attribute_set(:abstract_states, as_copy)
       attribute_set(:new_states, new_copy)
       attribute_set(:states, states_copy)
+
     end
 
     def sync_states()
@@ -99,7 +115,9 @@ module MINT
       attribute_set(:abstract_states, values[2])
       attribute_set(:new_states, values[1])
       attribute_set(:states, values[0])
+      save! # TODO Bugfix - in some situations states does not get updated for upcoming new states - this save seems to fix it.
       recover_statemachine
+
     end
 
     def self.notify(action,query,callback,time = nil)
@@ -159,11 +177,11 @@ module MINT
       save_statemachine
     end
 
-   # def initialize(attributes = nil)
-   #   super(attributes)
+    # def initialize(attributes = nil)
+    #   super(attributes)
 
-  #    recover_statemachine
-   # end
+    #    recover_statemachine
+    # end
 
     # The sync event method is overwritten in the derived classes to prevent synchronization cycles by setting an empty callback
     def sync_event(event)
@@ -280,6 +298,45 @@ module MINT
 
     def is_set(attribute)
       self.attribute_get(attribute)!=nil
+    end
+
+
+    def start_publishing_state
+
+      @publish_new_states = true
+
+    end
+
+    def stop_publishing_state
+      @publish_new_states = false
+    end
+
+    def publish_new_states abstract_states, states, new_states
+      return if not @publish_new_states
+      if @in_state_filter
+        if not (found['abstract_states'] =~ /in_state_filter/) or not (found['states'] =~ /in_state_filter/)
+          return
+        end
+
+      end
+
+      RedisConnector.redis.publish(new_states_channel_w_name,{:new_states => new_states})
+    end
+
+    def start_consume_client_state_changes
+      redis = RedisConnector.redis
+      sub_channel = "in_channel:"+channel+"."+name+":*"
+      p "subscribe for "+ sub_channel
+      redis.pubsub.psubscribe(sub_channel) { |channel,message|
+        p "#{name} received state change from client to #{message}"
+        sync_states
+        process_event message
+
+      }
+    end
+
+    def  stop_consume_client_state_changes
+      RedisConnector.sub.unsubscribe "in_channel:"+channel+":*"
     end
   end
 
