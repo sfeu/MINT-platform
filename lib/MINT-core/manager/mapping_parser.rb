@@ -17,14 +17,24 @@ module MINT
 
     # This function parses scxml from a file
     def build_from_scxml(filename)
+      begin
+
       source = File.new filename
       Document.parse_stream(source, self)
+      rescue SyntaxError, NameError => boom
+        print "Unable to parse mapping: #{filename} :" + boom.inspect
+      end
+
       @mapping
     end
 
     # This function parses scxml directly from the string parameter "stringbuffer"
     def build_from_scxml_string(stringbuffer)
-      Document.parse_stream(stringbuffer, self)
+      begin
+        Document.parse_stream(stringbuffer, self)
+      rescue SyntaxError, NameError => boom
+        print "Unable to parse mapping: " + boom.inspect
+      end
       @mapping
     end
 
