@@ -1,0 +1,16 @@
+<mapping name="Play video" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.Learningcycle" name="learner"  result="c" states="show_video"  process="onchange" />
+
+      <observation id="3" interactor="Interactor.CIO.HTMLWidget.VideoPlayer" name="libras_video"  result="video" process="instant"/> ]
+       </observations>
+    <actions>
+      <event id="5" type="play" target="video"/>
+    </actions>
+  </operator>
+
+</mapping>

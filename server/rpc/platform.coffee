@@ -42,16 +42,19 @@ subscribeInteractors = (ss, userId,session_id = null) ->
           forwardCommand(ss,counter,"unselect",data["name"],userId)
         if "init_js"  in data["new_states"]
           forwardCommand(ss,counter,"init_js",data["name"],userId)
-        if channel == "Interactor.CIO.Button"
+        if channel == "Interactor.CIO.HTMLWidget.Button"
           if "pressed" in data["new_states"]
             forwardCommand(ss,counter,"button",data["name"],userId)
           else
             if "released" in data["new_states"]
               forwardCommand(ss,counter,"button",data["name"],userId)
+        if "playing" in data["new_states"]
+          forwardCommand(ss,counter,"playing",data["name"],userId)
+        if "loading_video" in data["new_states"]
+          forwardCommand(ss,counter,"loading_video",data["name"],userId)
 
 
-
-  # Test that should be later on changed to forward all changes to client if the object is in presenting!
+  # out_channel is used to stream data
   pubsub.psubscribe("out_channel:*") #Interactor.AIO.AIOUT.AIOUTContinuous.volume:testuser")
   pubsub.on "pmessage", (pattern,channel, msg) =>
     if pattern == "out_channel:*"
@@ -116,6 +119,8 @@ exports.actions = (req, res, ss) ->
   stopSlider: (name) ->
     R.publish "in_channel:Interactor.AIO.AIIN.AIINContinuous."+name+":"+req.session.userId,"stop"
 
+  processClientStatus: ([channel,name,cmd]) ->
+    R.publish "in_channel:"+channel+"."+name+":"+req.session.userId, cmd
 
   retrieveActiveInteractors: () ->
     console.log "in retrieve interactos session #{JSON.stringify req.session}"

@@ -14,17 +14,17 @@ exports.sliderJS = (interactor) ->
 exports.progressbarJS = (interactor) ->
   $("#progressbar-"+interactor.cio.name).progressbar({ value: interactor.aio.data })
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
-      $("#progressbar-volume").progressbar( "option", "value", msg);
+    $("#progressbar-"+interactor.cio.name).progressbar( "option", "value", msg);
 
 exports.minimaloutputsliderJS = (interactor) ->
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
-      console.log("minimal #{msg}")
-      $("#"+interactor.cio.name).css( "left" , msg+"%" );
+    console.log("minimal #{msg}")
+    $("#"+interactor.cio.name).css( "left" , msg+"%" );
 
 exports.minimalverticaloutputsliderJS = (interactor) ->
   ss.event.on 'Interactor.AIO.AIOUT.AIOUTContinuous.'+interactor.cio.name, (msg,channel) ->
-      console.log("minimal #{msg}")
-      $("#"+interactor.cio.name).css( "top" , msg+"%" );
+    console.log("minimal #{msg}")
+    $("#"+interactor.cio.name).css( "top" , msg+"%" );
 
 exports.buttonJS = (interactor) ->
   $("#button-"+interactor.cio.name).button().unbind('mouseenter mouseleave');
@@ -37,7 +37,11 @@ exports.buttonJS = (interactor) ->
     else
       if !!~ cio.new_states.indexOf "pressed"
         $(id).addClass("ui-state-active")
-      #$("#button-"+name).removeClass('hover');
+#$("#button-"+name).removeClass('hover');
+
+exports.togglebuttonJS = (interactor) ->
+  console.log "tooglebutton"
+  $("#togglebutton-"+interactor.cio.name).button();
 
 exports.radiobuttongroupJS = (interactor) ->
   $("#radiobuttongroup-"+interactor.cio.name).buttonset();
@@ -64,8 +68,8 @@ exports.caroufredselJS = (interactor) ->
       event: '',
       items: 1,
       anchorBuilder: (nr, item) ->
-            src = item.attr("src").replace(".png", "_thumb.png")
-            "<img src=\"" + src + "\" border=\"0\" />"
+        src = item.attr("src").replace(".png", "_thumb.png")
+        "<img src=\"" + src + "\" border=\"0\" />"
 
 exports.caroufredselimageJS = (interactor) ->
   console.log("#{interactor.aio.parent} switch to #{interactor.aio.name}")
@@ -89,12 +93,23 @@ exports.webcamJS = (interactor) ->
     console.log "Reeeejected!", e
 
 exports.videoplayerJS = (interactor) ->
-  console.log("videoplayer JS"+interactor.cio.name)
+  console.log("videoplayer JS"+interactor)
   videojs(interactor.cio.name+"-video").ready ->
-    console.log("videoplayer playing")
     myPlayer = this
-    myPlayer.play()
+    ss.rpc "platform.processClientStatus",([interactor.cio.channel,interactor.cio.name,"player_ready"])
+    myPlayer.on "ended", ->
+      ss.rpc "platform.processClientStatus",([interactor.cio.channel,interactor.cio.name,"ended"])
+    myPlayer.on "loadeddata", ->
+      ss.rpc "platform.processClientStatus",([interactor.cio.channel,interactor.cio.name,"loaded"])
 
 
+exports.videoplayerAPI = (command,interactor) ->
+  player = videojs(interactor.cio.name+"-video")
+  console.log("VideoPlayer received #{command} for ")
+  console.log(interactor)
+  switch command
+    when 'playing' then player.play()
+    when 'paused' then player.pause()
+    when 'loading_video' then player.src(interactor.cio.video_url)
 
 

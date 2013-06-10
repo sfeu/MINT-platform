@@ -184,6 +184,15 @@ proccessCommandsFromQueue = (name) ->
      processCommand(interactor_data[0],interactor_data[1])
   window.commandQueue[name] = null
 
+processSpecificCommand = (command,data) ->
+  types = data.cio.classtype.split("::")
+  i_type = types[types.length - 1]
+  #call a javacsript function that can be used to initialize the new interactor
+  jsfunction = "interactorJS." + i_type.toLowerCase() + "API"
+  if (eval("typeof " + jsfunction + " == 'function'"))
+    f = eval(jsfunction)  # bad style TODO but windows does not work like expected
+    f(command,data)
+
 processCommand = (command,data) ->
   if !getDisplayedInteractor(data.aio.name)?
     console.log "queued command: #{data['command']} for #{data.aio.name}"
@@ -197,6 +206,7 @@ processCommand = (command,data) ->
         when 'unhighlight' then unhighlightInteractor(data)
         when 'select' then selectInteractor(data)
         when 'unselect' then unselectInteractor(data)
+        else processSpecificCommand(command,data)
 
 window.displayedInteractors = {}
 window.unresolvedDepsInteractors = []

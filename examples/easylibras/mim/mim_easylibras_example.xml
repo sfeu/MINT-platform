@@ -10,11 +10,32 @@
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
    <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
 
+
+  <include href="../../../../MINT-core/lib/MINT-core/model/mim/mouse_press_to_aicommand_activate.xml" start="true" />
+
+
+   <include href="../../../../MINT-core/lib/MINT-core/model/mim/aicommand_deactivate_to_togglebutton_unselect.xml" start="true" />
+   <include href="../../../../MINT-core/lib/MINT-core/model/mim/aicommand_activate_to_togglebutton_select.xml" start="true" />
+
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_hide_to_cio_display_cache_remove.xml" start="true" />
   <include href="../../../../MINT-core/lib/MINT-core/model/mim/cio_display_to_cio_display_cache_add.xml" start="true" />
 
-  <!-- browser refresh handling -->
-  <!--include href="../../../../MINT-core/lib/MINT-core/model/mim/caroufredsel_refreshing_to_caroufredsel_init_js.xml" start="true"/-->
+
+
+  <!-- Application specific mappings -->
+  <!--include href="mouse_press_to_aicommand_deactivate.xml" start="true" /-->
+
+  <include href="start_execution.xml" start="true"/>
+  <include href="stop_execution.xml" start="true"/>
+
+  <include href="video_ended_to_learncycle_start.xml" start="true"/>
+  <include href="learncycle_progress.xml" start="true"/>
+  <include href="load_video.xml" start="true"/>
+  <include href="inform_lc_video_loaded.xml" start="true"/>
+  <include href="play_video.xml" start="true"/>
+  <include href="next_lc.xml" start="true"/>
+
+
 
 
 </mim>

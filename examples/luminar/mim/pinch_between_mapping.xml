@@ -3,27 +3,29 @@
          xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
   <operator id = "1" type="complementary">
     <observations>
-      <observation id="2" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="f1" states="touched" process="continuous">
+      <observation id="2" process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="f1" states="touched" >
       </observation>
-      <observation id="4" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2" states="touched" process="continuous">
+      <observation id="4" process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2" states="touched" />
         <conditions>
-          <backend id="10" call="find_cio_from_coordinates" class="CUIControl" result="cio1" parameter="f1.x,f1.y"/>
-          <backend id="11" call="find_cio_from_coordinates" class="CUIControl" result="cio2" parameter="f2.x,f2.y"/>
-          <equals left="cio1.name" right="cio2.name"/>
-          <equals not="true" left="f1.name" right="f2.name"/>
-          <or>
-            <equals left="f3.name" right="f1.name"/>
-            <equals left="f3.name" right="f2.name"/>
-          </or>
+          <backend id="14" call="find_cio_between_fingers_spot" class="CUIControl" parameter="f1,f2" result="cio"/>
         </conditions>
       </observation>
     </observations>
     <terminate>
       <observations>
-        <observation id="5" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="p.name" states="released" process="onchange"/>
+        <or>
+          <observation id="5" process="onchange">
+            <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="released" />
+          </observation>
+          <observation id="6" process="onchange">
+            <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="released" />
+          </observation>
+        </or>
       </observations>
       <actions>
-     </actions>
+      </actions>
     </terminate>
     <actions>
       <bindings>

@@ -1,0 +1,51 @@
+<mapping name="Pinch Mapping" type="sequence" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.multi-access.de"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings-2013.xsd">
+  <operator id = "1" type="complementary">
+    <observations>
+      <observation id="2"   process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" states="touched" result="f1"/>
+      </observation>
+      <observation id="3" process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" states="touched"  result="f2"/>
+      </observation>
+      <observation id="4" >
+        <backend id="5" call="find_cio_between_fingertips" class="CUIControl" parameter="f1,f2" result="cio"/>
+      </observation>
+    </observations>
+    <actions>
+      <event id="6" type="grab" target="cio"/>
+      <mapping name="Pinch Binding" type="binding" >
+        <operator id = "7" type="equivalence">
+          <observations>
+            <observation id="8">
+              <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="moving"/>
+            </observation>
+            <observation id="9" >
+              <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="moving"/>
+            </observation>
+          </observations>
+          <actions>
+            <backend id="10" call="calculate_distance" class="CUIControl" parameter="f1,f2" result="d"/>
+            <backend id="11" call="distance_to_size" class="CUIControl" parameter="d" result="size"/>
+            <interactor name="cio" id="12" call="scale" interactor="Interactor.CIO" parameter="size"/>
+            <backend id="13" call="calculate_rotation" class="CUIControl" parameter="f1,f2" result="r"/>
+            <interactor id="14" name="cio" call="rotate" interactor="Interactor.CIO" parameter="r"/>
+          </actions>
+        </operator>
+        <terminate>
+          <operator id = "15" type="equivalence">
+            <observations>
+              <observation id="5" process="onchange">
+                <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="released" />
+              </observation>
+              <observation id="6" process="onchange">
+                <state  interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="released" />
+              </observation>
+          </observations>
+          </operator>
+        </terminate>
+      </mapping>
+    </actions>
+  </operator>
+</mapping>

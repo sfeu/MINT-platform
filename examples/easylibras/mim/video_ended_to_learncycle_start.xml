@@ -1,0 +1,13 @@
+<mapping name="Start Learncycle after Video has been ended" xmlns="http://www.multi-access.de" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de mint-mappings.xsd">
+  <operator type="sequential" id="1">
+    <observations>
+      <observation id="2" interactor="Interactor.CIO.HTMLWidget.VideoPlayer" name="libras_video" states="ended" result="video" process="onchange"/>
+      <observation id="3" interactor="Interactor.Learningcycle" name="learner" result="learner" process="instant"/>
+    </observations>
+    <actions>
+
+      <event id="4" type="ended" target="learner"/>
+    </actions>
+  </operator>
+</mapping>

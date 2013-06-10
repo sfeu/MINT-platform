@@ -1,0 +1,48 @@
+<mapping name="Pinch Mapping" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+  <operator id = "1" type="complementary">
+    <observations>
+      <observation id="2" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" result="f1" states="touched" process="onchange">
+      </observation>
+      <observation id="4" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2" states="touched" process="onchange">
+        <observation>
+          <backend id="14" call="find_cio_between_fingers_spot" class="CUIControl" parameter="f1,f2" result="cio"/>
+        </observation>
+      </observation>
+    </observations>
+    <actions>
+      <event id="15" type="grab" target="cio"/>
+      <mapping>
+        <operator id = "1" type="equivalent">
+          <observations>
+            <observation id="16" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1" states="moving" process="continuous"/>
+            <observation id="16" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2" states="moving" process="continuous"/>
+          </observations>
+        </operator>
+      </mapping>
+    </actions>
+
+    <terminate>
+      <observations>
+         <or>
+           <observation id="5" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="released" process="onchange"/>
+           <observation id="6" interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="released" process="onchange"/>
+         </or>
+      </observations>
+      <actions>
+     </actions>
+    </terminate>
+    <actions>
+      <bindings>
+        <backend id="10" call="calculate_distance" class="CUIControl" result="dist" parameter="f1,f2"/>
+        <attribute id="33"  name_in="dist" interactor_out="Interactor.CIO" name_out="cio1" attr_out="cio1.height" transformation="distance_to_size" class="CUIControl"/>
+        <attribute id="33"  name_in="dist" interactor_out="Interactor.CIO" name_out="cio1" attr_out="cio1.width" transformation="distance_to_size" class="CUIControl"/>
+      </bindings>
+    </actions>
+  </operator>
+
+  <!-- mesa: 5: 1481 / 3: 1730 2: 2010 1: 2030 0: 1590 -->
+
+
+</mapping>

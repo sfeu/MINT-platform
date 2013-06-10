@@ -1,0 +1,14 @@
+<mapping name="Initiate next LC" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../MINT-core/lib/MINT-core/model/mim/mint-mappings.xsd">
+
+  <operator id="1" type="sequential">
+    <observations>
+      <observation id="2" interactor="Interactor.Learningcycle" name="learner"  result="c" states="ended"  process="onchange" />
+    </observations>
+    <actions>
+      <event id="5" type="start" target="c"/>
+    </actions>
+  </operator>
+
+</mapping>

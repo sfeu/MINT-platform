@@ -1,0 +1,49 @@
+<mapping name="Pivot Rotate Mapping" type="sequence" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de ../../../../MINT-core/lib/MINT-core/model/mim/mint-mappings-2013.xsd">
+  <operator id = "1" type="sequence">
+    <observations>
+      <observation id="2"   process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" states="touched" result="f1"/>
+      </observation>
+      <observation id="4" process="continuous">
+        <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" states="touched"  result="f2"/>
+      </observation>
+      <observation id="" >
+        <backend id="10" call="find_cio_from_coordinates" class="CUIControl" parameter="f1.x,f1.y" result="cio"/>
+      </observation>
+    </observations>
+    <actions>
+      <event id="11" type="grab" target="cio"/>
+      <mapping name="grab binding" type="binding" >
+        <operator id = "6" type="complementary">
+          <observations>
+            <observation id="5">
+              <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="stopped"/>
+            </observation>
+            <observation id="8" >
+              <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="moving"/>
+            </observation>
+          </observations>
+          <actions>
+            <backend id="10" call="calculate_movement" class="CUIControl" parameter="f2" result="d"/>
+            <backend id="10" call="distance_to_rotation" class="CUIControl" parameter="d" result="r"/>
+            <interactor id="10" call="rotate" interactor="Interactor.CIO" name="cio" parameter="r"/>
+          </actions>
+        </operator>
+        <terminate>
+          <operator type="equivalence" id="">
+            <observations>
+              <observation id="5" process="onchange">
+                <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f1.name" states="stopped" negation="true" />
+              </observation>
+              <observation id="6" process="onchange">
+                <state interactor="Interactor.IR.IRMode.Body.Hand.Fingertip" name="f2.name" states="released" />
+              </observation>
+            </observations>
+          </operator>
+        </terminate>
+      </mapping>
+    </actions>
+  </operator>
+</mapping>

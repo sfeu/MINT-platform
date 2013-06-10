@@ -7,10 +7,10 @@ require 'redis'
 require "eventmachine"
 require 'hiredis'
 require 'fiber'
-# require "./music_sheet_backend"
 
 EM.run {
   require "MINT-core"
+  require "./easylibras_backend"
 
   redis = Redis.connect
   redis.flushdb
@@ -24,7 +24,14 @@ EM.run {
 
   DataMapper.finalize
 
+  SCXMLClient.new("Interactor.Learningcycle","libras_recognizer").start #("10.10.0.2")
+
   m = MappingManager.new
+  #MappingServer.new.start(m)
+
+  lr = LibrasRecognizer.create(:name => 'libras_recognizer')
+  lr.start #("0.0.0.0", 3004)
+
   m.started do
     Fiber.new {
 
@@ -62,8 +69,16 @@ EM.run {
                       :css=>"http://vjs.zencdn.net/4.0/video-js.css|/easylibras_example/application.css",
                       :states=>[:positioned])
 
-      VideoPlayer.create(:name => 'libras_video',
-                         :video_url => '/easylibras_example/A.mp4',
+      lc = Learningcycle.create(:name =>'learner')
+      lc.librasvideos << Librasvideo.new(:word => 'A',:path=>'/easylibras_example/A.mp4')
+      lc.librasvideos << Librasvideo.new(:word => 'E',:path=>'/easylibras_example/E.mp4')
+      lc.librasvideos << Librasvideo.new(:word => 'I',:path=>'/easylibras_example/I.mp4')
+      lc.librasvideos << Librasvideo.new(:word => 'O',:path=>'/easylibras_example/O.mp4')
+      lc.librasvideos << Librasvideo.new(:word => 'U',:path=>'/easylibras_example/U.mp4')
+      lc.save
+
+      vp = VideoPlayer.create(:name => 'libras_video',
+                         #:video_url => '/easylibras_example/U.mp4',
                          :video_type => "video/mp4",
                          :poster_url => "",
                          :x=>0,
@@ -82,7 +97,7 @@ EM.run {
                          :states=>[:positioned],
                          :highlightable =>false)
 
-      Button.create(:name=>"start",:height =>60, :width => 200, :x=>560, :y => 670, :states=>[:positioned], :highlightable =>true)
+      ToggleButton.create(:name=>"start",:height =>60, :width => 200, :x=>560, :y => 670, :states=>[:positioned], :highlightable =>true)
 
       Image.create(:name=>"logo",:path => "/easylibras_example/logo.png",:highlightable =>false,:height =>108, :width => 381, :x=>450, :y => 10,:states=>[:positioned],:depends => "start")
 
@@ -90,6 +105,8 @@ EM.run {
 
       # Connect IRMs and present app
       ###################################
+
+      EasyLibrasBackend.initialize
 
       mouse.process_event :connect
       root.process_event :present
@@ -101,9 +118,11 @@ EM.run {
       progress.process_event :present
       start.process_event :present
 
+      # dialogue state machine
+
+
     }.resume nil
   end
   m.load("./mim/mim_easylibras_example.xml")
-
 }
 
