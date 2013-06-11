@@ -1,0 +1,51 @@
+<scxml initial="initialized" name="AIMultiChoiceElement" version="0.9" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0.0 y=0.0 w=624.0 h=762.0  -->
+ <state id="initialized"><!--   node-size-and-position x=514.0 y=43.0 w=90.0 h=30.0  -->
+  <transition event="organize" target="organized"></transition>
+ </state>
+ <state id="organized"><!--   node-size-and-position x=514.0 y=123.0 w=90.0 h=30.0  -->
+  <transition event="suspend" target="suspended"><!--   edge-path [suspended]  x=560.0 y=730.0 pointx=0.0 pointy=20.0 offsetx=0.0 offsety=30.0  --></transition>
+  <transition event="present" target="p"></transition>
+ </state>
+ <state id="suspended"><!--   node-size-and-position x=372.00000000000006 y=712.0 w=90.0 h=30.0  -->
+  <transition event="organize" target="organized"><!--   edge-path [organized]  x=610.0 y=740.0 x=610.0 y=140.0 pointx=1.0 pointy=-40.0 offsetx=44.0 offsety=40.0  --></transition>
+  <transition event="present" target="p"><!--   edge-path [p]  x=388.98476942531727 y=691.3273106758478  --></transition>
+ </state>
+ <parallel id="p"><!--   node-size-and-position x=20.0 y=203.0 w=510.0 h=459.0  -->
+  <transition event="suspend" target="suspended"><!--   edge-path [suspended]  x=407.01523057468273 y=682.6726893241523  --></transition>
+  <state id="presenting" initial="defocused"><!--   node-size-and-position x=20.0 y=43.0 w=160.0 h=173.0  -->
+   <state id="defocused"><!--   node-size-and-position x=36.5 y=43.0 w=90.0 h=30.0  -->
+    <transition event="focus" target="focused"><!--   edge-path [focused]  x=143.0 y=98.0  --></transition>
+   </state>
+   <state id="focused"><!--   node-size-and-position x=36.5 y=123.0 w=90.0 h=30.0  -->
+    <transition event="defocus" target="defocused"><!--   edge-path [defocused]  x=123.0 y=98.0  --></transition>
+    <transition cond="exists_prev" event="prev" target="defocused">
+     <invoke src="focus_previous" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=83.0 y=98.0  --></transition>
+    <transition event="parent" target="defocused">
+     <invoke src="focus_parent" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=63.0 y=98.0  --></transition>
+    <transition cond="exists_next" event="next" target="defocused">
+     <invoke src="focus_next" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=103.0 y=98.0 pointx=0.0 pointy=14.0 offsetx=2.0 offsety=-2.0  --></transition>
+   </state>
+  </state>
+  <state id="c" initial="choice"><!--   node-size-and-position x=240.0 y=43.0 w=250.00000000000003 h=395.99999999999994  -->
+   <state id="dragging"><!--   node-size-and-position x=85.0 y=43.0 w=80.0 h=30.0  -->
+    <transition event="dropped" target="dropped"></transition>
+   </state>
+   <state id="dropped"><!--   node-size-and-position x=50.0 y=123.0 w=80.0 h=30.0  -->
+    <transition target="choice"></transition>
+   </state>
+   <state id="choice" initial="unchosen"><!--   node-size-and-position x=20.0 y=203.00000000000006 w=209.99999999999997 h=173.0  -->
+    <transition event="drag" target="dragging"><!--   edge-path [dragging]  x=160.0 y=138.0  --></transition>
+    <state id="unchosen"><!--   node-size-and-position x=20.0 y=42.99999999999994 w=90.0 h=30.0  -->
+     <transition cond="self.is_in?(:focused)" event="choose" target="chosen"><!--   edge-path [chosen]  x=81.0 y=98.0  --></transition>
+    </state>
+    <state id="chosen"><!--   node-size-and-position x=20.0 y=122.99999999999994 w=90.0 h=30.0  -->
+     <transition event="unchoose" target="unchosen"><!--   edge-path [unchosen]  x=61.0 y=98.0  --></transition>
+    </state>
+    <history id="H" type="deep"><!--   node-size-and-position x=170.0 y=42.99999999999994 w=20.0 h=20.0  --></history>
+   </state>
+  </state>
+ </parallel>
+</scxml>

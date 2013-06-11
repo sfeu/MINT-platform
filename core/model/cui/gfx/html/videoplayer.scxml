@@ -1,0 +1,88 @@
+<scxml initial="initialized" name="VideoPlayer" version="0.9" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0.0 y=0.0 w=1050.0 h=720.0  -->
+ <state id="initialized"><!--   node-size-and-position x=220.0 y=60.0 w=100.0 h=40.0  -->
+  <transition event="position" target="positioning"></transition>
+ </state>
+ <state id="positioning"><!--   node-size-and-position x=220.0 y=140.0 w=100.0 h=40.0  -->
+  <transition event="calculated" target="positioned">
+   <invoke src="store_calculated_values_in_model" type="x-mint"></invoke>
+  </transition>
+ </state>
+ <state id="positioned"><!--   node-size-and-position x=220.0 y=240.0 w=100.0 h=40.0  -->
+  <transition event="display" target="displaying"><!--   edge-path [displaying]  pointx=0.0 pointy=22.0 offsetx=12.0 offsety=-1.0  --></transition>
+  <transition event="hide" target="hidden"></transition>
+ </state>
+ <state id="displaying" initial="init_js"><!--   node-size-and-position x=380.0 y=210.0 w=660.0 h=490.0  -->
+  <onentry>
+   <script>
+
+start_publishing_state
+start_consume_client_state_changes
+   </script>
+  </onentry>
+  <onexit>
+   <script>
+stop_publishing_state
+stop_consume_client_state_changes
+ </script>
+  </onexit>
+  <transition event="disable" target="disabled"></transition>
+  <transition event="hide" target="hidden"></transition>
+  <transition event="refresh" target="refreshing"></transition>
+  <parallel id="p"><!--   node-size-and-position x=120.0 y=40.0 w=530.0 h=440.0  -->
+   <state id="d" initial="displayed"><!--   node-size-and-position x=120.0 y=250.0 w=300.0 h=180.0  -->
+    <state id="displayed"><!--   node-size-and-position x=100.0 y=40.0 w=100.0 h=30.0  -->
+     <transition event="highlight" target="highlighted"><!--   edge-path [highlighted]  x=100.0 y=100.0 pointx=0.0 pointy=-1.0 offsetx=11.0 offsety=-11.0  --></transition>
+    </state>
+    <state id="highlighted"><!--   node-size-and-position x=100.0 y=130.0 w=100.0 h=30.0  -->
+     <transition event="unhighlight" target="displayed"><!--   edge-path [displayed]  x=190.0 y=100.0  --></transition>
+     <transition event="up" target="displayed">
+      <invoke src="highlight_up" type="x-mint"></invoke>
+<!--   edge-path [displayed]  x=230.0 y=140.0 x=230.0 y=60.0 pointx=0.0 pointy=-10.0 offsetx=0.0 offsety=5.0  --></transition>
+     <transition event="down" target="displayed">
+      <invoke src="highlight_down" type="x-mint"></invoke>
+<!--   edge-path [displayed]  x=60.0 y=140.0 x=60.0 y=60.0  --></transition>
+     <transition event="left" target="displayed">
+      <invoke src="highlight_left" type="x-mint"></invoke>
+<!--   edge-path [displayed]  x=30.0 y=150.0 x=30.0 y=50.0  --></transition>
+     <transition event="right" target="displayed">
+      <invoke src="highlight_right" type="x-mint"></invoke>
+<!--   edge-path [displayed]  x=270.0 y=150.0 x=270.0 y=50.0  --></transition>
+    </state>
+   </state>
+   <state id="v" initial="videocontrol"><!--   node-size-and-position x=10.0 y=50.0 w=500.0 h=190.0  -->
+    <state id="videocontrol" initial="paused"><!--   node-size-and-position x=200.0 y=30.0 w=290.0 h=160.0  -->
+     <transition event="load_video" target="loading_video"><!--   edge-path [loading_video]  x=130.0 y=160.0 pointx=0.0 pointy=7.0 offsetx=16.0 offsety=-4.0  --></transition>
+     <state id="paused"><!--   node-size-and-position x=30.0 y=100.0 w=100.0 h=40.0  -->
+      <transition event="play" target="playing"></transition>
+     </state>
+     <state id="playing"><!--   node-size-and-position x=180.0 y=110.0 w=100.0 h=30.0  -->
+      <transition event="pause" target="paused"><!--   edge-path [paused]  x=160.0 y=110.0 pointx=0.0 pointy=-22.0 offsetx=4.0 offsety=0.0  --></transition>
+      <transition event="ended" target="ended"><!--   edge-path [ended]  pointx=-1.0 pointy=-25.0 offsetx=-3.0 offsety=-2.0  --></transition>
+     </state>
+     <state id="ended"><!--   node-size-and-position x=110.0 y=40.0 w=100.0 h=30.0  -->
+      <transition target="paused"></transition>
+     </state>
+    </state>
+    <state id="loading_video"><!--   node-size-and-position x=30.0 y=80.0 w=100.0 h=50.0  -->
+     <transition event="loaded" target="video_ready"></transition>
+    </state>
+    <state id="video_ready"><!--   node-size-and-position x=90.0 y=30.0 w=100.0 h=30.0  -->
+     <transition target="videocontrol"></transition>
+    </state>
+   </state>
+  </parallel>
+  <state id="init_js"><!--   node-size-and-position x=10.0 y=60.0 w=60.0 h=40.0  -->
+   <transition event="player_ready" target="p"><!--   edge-path [p]  x=50.0 y=150.0 pointx=0.0 pointy=6.0 offsetx=-3.0 offsety=32.0  --></transition>
+  </state>
+ </state>
+ <state id="disabled"><!--   node-size-and-position x=570.0 y=70.0 w=110.0 h=40.0  -->
+  <transition event="hide" target="hidden"></transition>
+ </state>
+ <state id="hidden"><!--   node-size-and-position x=400.0 y=70.0 w=110.0 h=40.0  -->
+  <transition event="position" target="positioning"></transition>
+  <transition event="display" target="displaying"><!--   edge-path [displaying]  x=420.0 y=180.0  --></transition>
+ </state>
+ <state id="refreshing"><!--   node-size-and-position x=200.0 y=410.0 w=100.0 h=50.0  -->
+  <transition target="displaying"><!--   edge-path [displaying]  x=260.0 y=510.0  --></transition>
+ </state>
+</scxml>
