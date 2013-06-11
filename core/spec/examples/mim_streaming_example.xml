@@ -1,0 +1,9 @@
+<?xml version='1.0'?>
+<mim name="Streaming Example" xmlns="http://www.multi-access.de"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.multi-access.de mint-mappings.xsd">
+
+  <include href="reset_click.xml"/>
+  <include href="mouse_highlight.xml" start="true"/>
+  <include href="browserscreen_reload_to_cuicontrol_refresh_all.xml" start="true"/>
+</mim>
