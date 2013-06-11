@@ -1,0 +1,67 @@
+<scxml initial="initialized" name="AISingleChoice" version="0.9" xmlns="http://www.w3.org/2005/07/scxml"><!--   node-size-and-position x=0.0 y=0.0 w=450.0 h=700.0  -->
+ <state id="initialized"><!--   node-size-and-position x=178.25 y=43.0 w=90.0 h=30.0  -->
+  <transition event="organize" target="organized"></transition>
+ </state>
+ <state id="organized"><!--   node-size-and-position x=178.25 y=123.0 w=90.0 h=30.0  -->
+  <transition event="suspend" target="suspended"><!--   edge-path [suspended]  x=233.25 y=178.0  --></transition>
+  <transition event="present" target="p"><!--   edge-path [p]  x=298.25 y=218.0 pointx=0.0 pointy=0.0 offsetx=1.0 offsety=0.0  --></transition>
+ </state>
+ <state id="suspended"><!--   node-size-and-position x=178.25 y=203.0 w=90.0 h=30.0  -->
+  <transition event="organize" target="organized"><!--   edge-path [organized]  x=213.25 y=178.0  --></transition>
+  <transition event="present" target="p"><!--   edge-path [p]  x=233.25 y=258.0  --></transition>
+ </state>
+ <parallel id="p"><!--   node-size-and-position x=20.0 y=280.0 w=410.0 h=420.0  -->
+  <onentry>
+   <invoke src="inform_parent_presenting" type="x-mint"></invoke>
+   <invoke src="present_children" type="x-mint"></invoke>
+  </onentry>
+  <onexit>
+   <invoke src="suspend_children" type="x-mint"></invoke>
+  </onexit>
+  <transition event="suspend" target="suspended"><!--   edge-path [suspended]  x=213.25 y=258.0  --></transition>
+  <state id="presenting" initial="wait_for_children"><!--   node-size-and-position x=20.0 y=40.0 w=190.0 h=350.0  -->
+   <state id="defocused"><!--   node-size-and-position x=30.5 y=190.0 w=90.0 h=30.0  -->
+    <transition event="focus" target="focused"><!--   edge-path [focused]  x=151.0 y=245.0  --></transition>
+   </state>
+   <state id="focused"><!--   node-size-and-position x=30.5 y=270.0 w=90.0 h=30.0  -->
+    <transition event="defocus" target="defocused"><!--   edge-path [defocused]  x=131.0 y=245.0  --></transition>
+    <transition event="parent" target="defocused">
+     <invoke src="focus_parent" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=71.0 y=245.0  --></transition>
+    <transition cond="exists_prev" event="prev" target="defocused">
+     <invoke src="focus_previous" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=91.0 y=245.0  --></transition>
+    <transition cond="exists_next" event="next" target="defocused">
+     <invoke src="focus_next" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=111.0 y=245.0 pointx=0.0 pointy=14.0 offsetx=2.0 offsety=-2.0  --></transition>
+    <transition event="child" target="defocused">
+     <invoke src="focus_child" type="x-mint"></invoke>
+<!--   edge-path [defocused]  x=51.0 y=245.0  --></transition>
+   </state>
+   <state id="wait_for_children"><!--   node-size-and-position x=10.0 y=40.0 w=100.0 h=40.0  -->
+    <transition event="children_finished" target="children_finished"></transition>
+   </state>
+   <state id="children_finished"><!--   node-size-and-position x=80.0 y=120.0 w=100.0 h=40.0  -->
+    <transition target="defocused"></transition>
+   </state>
+  </state>
+  <state id="dropping" initial="listing"><!--   node-size-and-position x=220.0 y=40.0 w=170.0 h=180.0  -->
+   <state id="listing"><!--   node-size-and-position x=20.0 y=43.0 w=90.0 h=30.0  -->
+    <transition cond="self.is_in?(:focused)" event="drop" target="dropped">
+     <script> @aios = MINT::AISingleChoiceElement.all(:new_states=&gt; /#{Regexp.quote(&quot;dragging&quot;)}/); add(@aios); @aios.each do |aio| aio.process_event :drop end</script>
+<!--   edge-path [dropped]  x=70.0 y=98.0  --></transition>
+    <transition event="unchoose_all">
+     <invoke src="unchoose_all" type="x-mint"></invoke>
+    </transition>
+    <transition event="choose_all">
+     <invoke src="choose_all" type="x-mint"></invoke>
+<!--   edge-path [listing]  x=-10.0 y=14.0  --></transition>
+   </state>
+   <state id="dropped"><!--   node-size-and-position x=25.0 y=123.0 w=80.0 h=30.0  -->
+    <transition target="listing">
+     <script> self.process_event(:defocus); @aios.each do |aio| aio.process_event :focus end </script>
+<!--   edge-path [listing]  x=50.0 y=98.0  --></transition>
+   </state>
+  </state>
+ </parallel>
+</scxml>
