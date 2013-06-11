@@ -118,9 +118,9 @@ module MINT
   class CheckBoxGroup < HTMLContainer
   end
 
-  require "MINT-core/model/cui/gfx/html/RadioButton"
-  require "MINT-core/model/cui/gfx/html/RadioButtonGroup"
-  require "MINT-core/model/cui/gfx/html/MarkableRadioButton"
+  require "model/cui/gfx/html/RadioButton"
+  require "model/cui/gfx/html/RadioButtonGroup"
+  require "model/cui/gfx/html/MarkableRadioButton"
 
   class BasicText < HTMLWidget
   end
